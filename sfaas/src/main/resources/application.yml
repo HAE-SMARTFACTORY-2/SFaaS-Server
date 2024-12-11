@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DATABASE_ENDPOINT_URL}:5432/${DATABASE_NAME}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+
+  mybatis:
+    config-location: classpath:mybatis-config-postgresql.xml
+    mapper-locations: classpath:mappers/postgre/main/*/*.xml
+
+  sql:
+    init:
+      mode: never
+
+  config:
+    import: optional:application-secret.properties
+    activate:
+      on-profile: local
+
+  data:
+    redis:
+      host: localhost
+      port: 6379

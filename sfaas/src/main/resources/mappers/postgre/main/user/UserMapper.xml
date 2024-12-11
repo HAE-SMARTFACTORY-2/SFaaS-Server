@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.hae.sfaas.domain.user.mapper.UserMapper">
+
+    <select id="loginUser" parameterType="User" resultType="User">
+        SELECT *
+        FROM ${sfaas.db.schema}.user
+        WHERE 1=1
+          AND user_id = #{userId} AND pass_word = #{passWord}
+    </select>
+
+</mapper>
+

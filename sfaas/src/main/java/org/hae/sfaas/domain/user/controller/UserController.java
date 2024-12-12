@@ -16,7 +16,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/test")
+    @PostMapping("/login")
     public ResponseEntity<SFaaSResponse<?>> getUserInfo(@RequestBody UserLoginRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.OK, userService.getMyProfile(request)));
     }

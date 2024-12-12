@@ -32,6 +32,7 @@ public enum ErrorType {
      * 404 NOT FOUND (4400 ~ 4499)
      */
     NOT_FOUND(HttpStatus.NOT_FOUND, 4400, "존재하지 않는 리소스입니다."),
+    NOT_FOUND_USER(HttpStatus.NOT_FOUND, 4401, "존재하지 않는 유저입니다."),
 
     /**
      * 405 Method Not Allowed (4500 ~ 4599)

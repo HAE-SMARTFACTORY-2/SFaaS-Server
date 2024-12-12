@@ -10,6 +10,12 @@
           AND user_email = #{userEmail} AND user_pwd = #{userPwd}
     </select>
 
+    <update id="updateLoginAt" parameterType="Long">
+        UPDATE ${sfaas.db.schema}.user
+        SET last_login_at = NOW()
+        WHERE user_id = #{userId}
+    </update>
+
     <select id="findById" parameterType="Long" resultType="User">
         SELECT *
         FROM ${sfaas.db.schema}.user
@@ -34,12 +40,11 @@
         WHERE u.user_id = #{userId}
     </select>
 
-    <update id="updateUserRoleById">
+    <update id="updateUserRoleById" >
         UPDATE ${sfaas.db.schema}.user
         SET user_role = #{role}
         WHERE user_id = #{userId}
     </update>
-
 
 </mapper>
 

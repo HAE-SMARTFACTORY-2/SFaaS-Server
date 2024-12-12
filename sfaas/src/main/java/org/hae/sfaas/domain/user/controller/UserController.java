@@ -42,4 +42,5 @@ public class UserController {
         UserDetailInfoResponse response = userService.getMyInfo(userId);
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_MYINFO_SUCCESS, response));
     }
+
 }

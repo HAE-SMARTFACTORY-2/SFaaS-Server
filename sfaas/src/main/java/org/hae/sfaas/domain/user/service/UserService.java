@@ -23,12 +23,13 @@ import java.util.List;
 public class UserService {
     private final UserMapper userMapper;
 
+    @Transactional
     public UserInfoResponse getLoginInfo(final UserLoginRequest request) {
         User user = userMapper.loginUser(request);
         if(isInvalidUser(user)) {
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
-        // TODO- user login at 현재 시간으로 바뀌게
+        userMapper.updateLoginAt(user.getUserId());
         return UserInfoResponse.of(user);
     }
 

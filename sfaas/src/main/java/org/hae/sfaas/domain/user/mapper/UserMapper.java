@@ -17,4 +17,6 @@ public interface UserMapper {
     List<User> findByFactoryId(Long factoryId);
     DetailUser getMyInfo(Long userId);
     void updateUserRoleById(Long userId, UserRole role);
+
+    void updateLoginAt(Long userId);
 }

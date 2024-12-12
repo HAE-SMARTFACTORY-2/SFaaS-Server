@@ -56,6 +56,9 @@ public class UserService {
         User supervisor = userMapper.findById(request.userId());
         User targetUser = userMapper.findById(request.targetUserId());
 
+        if(isInvalidUser(supervisor) || isInvalidUser(targetUser)) {
+            throw new SFaaSException(ErrorType.NOT_FOUND_USER);
+        }
         if (supervisor.getUserRole().equals(UserRole.ADMIN)) {
             userMapper.updateUserRoleById(request.targetUserId(), request.role());
         } else if (supervisor.getUserRole().equals(UserRole.MANAGER)) {

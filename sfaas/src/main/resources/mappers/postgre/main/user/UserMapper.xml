@@ -7,8 +7,39 @@
         SELECT *
         FROM ${sfaas.db.schema}.user
         WHERE 1=1
-          AND user_id = #{userId} AND pass_word = #{passWord}
+          AND user_email = #{userEmail} AND user_pwd = #{userPwd}
     </select>
+
+    <select id="findById" parameterType="Long" resultType="User">
+        SELECT *
+        FROM ${sfaas.db.schema}.user
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="findAll" resultType="User">
+        SELECT *
+        FROM ${sfaas.db.schema}.user
+    </select>
+
+    <select id="findByFactoryId" parameterType="Long" resultType="User">
+        SELECT *
+        FROM ${sfaas.db.schema}.user
+        WHERE factory_id = #{factoryId}
+    </select>
+
+    <select id="getMyInfo" parameterType="Long" resultType="DetailUser">
+        SELECT *
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.factory f ON u.factory_id = f.factory_id
+        WHERE u.user_id = #{userId}
+    </select>
+
+    <update id="updateUserRoleById">
+        UPDATE ${sfaas.db.schema}.user
+        SET user_role = #{role}
+        WHERE user_id = #{userId}
+    </update>
+
 
 </mapper>
 

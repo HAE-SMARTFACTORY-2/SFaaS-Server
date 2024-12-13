@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<SFaaSResponse<?>> getUserInfos(@RequestParam("userId") Long userId) {
-        List<UserInfoResponse> response = userService.getUserInfos(userId);
+        List<UserDetailInfoResponse> response = userService.getUserInfos(userId);
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_USERINFOS_SUCCESS, response));
     }
 

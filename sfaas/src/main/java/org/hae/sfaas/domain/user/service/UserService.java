@@ -33,13 +33,13 @@ public class UserService {
         return UserInfoResponse.of(user);
     }
 
-    public List<UserInfoResponse> getUserInfos(Long userId) {
+    public List<UserDetailInfoResponse> getUserInfos(Long userId) {
         User user = userMapper.findById(userId);
         if(isInvalidUser(user)) {
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        List<User> users = null;
+        List<DetailUser> users = null;
         if (user.getUserRole().equals(UserRole.ADMIN)) {
             users = userMapper.findAll();
         } else if (user.getUserRole().equals(UserRole.MANAGER)) {
@@ -48,7 +48,7 @@ public class UserService {
             throw new SFaaSException(ErrorType.FORBIDDEN_USER);
         }
 
-        return users.stream().map(UserInfoResponse::of).toList();
+        return users.stream().map(UserDetailInfoResponse::of).toList();
     }
 
     @Transactional

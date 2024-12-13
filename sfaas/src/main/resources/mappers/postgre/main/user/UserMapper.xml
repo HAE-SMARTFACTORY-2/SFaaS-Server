@@ -22,15 +22,17 @@
         WHERE user_id = #{userId}
     </select>
 
-    <select id="findAll" resultType="User">
-        SELECT *
-        FROM ${sfaas.db.schema}.user
+    <select id="findAll" resultType="DetailUser">
+        SELECT u.*, f.factory_code, f.factory_location
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.factory f ON u.factory_id = f.factory_id
     </select>
 
-    <select id="findByFactoryId" parameterType="Long" resultType="User">
-        SELECT *
-        FROM ${sfaas.db.schema}.user
-        WHERE factory_id = #{factoryId}
+    <select id="findByFactoryId" parameterType="Long" resultType="DetailUser">
+        SELECT u.*, f.factory_code, f.factory_location
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.factory f ON u.factory_id = f.factory_id
+        WHERE u.factory_id = #{factoryId}
     </select>
 
     <select id="getMyInfo" parameterType="Long" resultType="DetailUser">

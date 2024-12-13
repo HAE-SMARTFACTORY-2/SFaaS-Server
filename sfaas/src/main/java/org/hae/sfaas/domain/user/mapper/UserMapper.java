@@ -13,8 +13,8 @@ import java.util.List;
 public interface UserMapper {
     User loginUser(UserLoginRequest request);
     User findById(Long userId);
-    List<User> findAll();
-    List<User> findByFactoryId(Long factoryId);
+    List<DetailUser> findAll();
+    List<DetailUser> findByFactoryId(Long factoryId);
     DetailUser getMyInfo(Long userId);
     void updateUserRoleById(Long userId, UserRole role);
 

@@ -13,5 +13,7 @@ public class User {
     private String userName;
     private Long userMgr;
     private UserRole userRole;  // "ADMIN", "MANAGER", "USER"
+    private String department;
+    private String position;
     private LocalDateTime lastLoginAt;
 }

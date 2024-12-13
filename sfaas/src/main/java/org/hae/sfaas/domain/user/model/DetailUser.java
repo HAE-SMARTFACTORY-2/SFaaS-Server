@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class User {
+public class DetailUser {
     private Long userId;
     private Long factoryId;
     private String userEmail;
@@ -14,4 +14,6 @@ public class User {
     private Long userMgr;
     private UserRole userRole;  // "ADMIN", "MANAGER", "USER"
     private LocalDateTime lastLoginAt;
+    private String factoryCode;
+    private String factoryLocation;
 }

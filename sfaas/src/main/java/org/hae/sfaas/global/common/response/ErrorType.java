@@ -23,10 +23,13 @@ public enum ErrorType {
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, 4100, "인증되지 않았습니다."),
     ACCESS_DENIED(HttpStatus.UNAUTHORIZED, 4109, "알 수 없는 이유로 요청이 거절되었습니다."),
 
+
     /**
      * 403 FORBIDDEN (4300 ~ 4399)
      */
     FORBIDDEN(HttpStatus.FORBIDDEN, 4300, "해당 자원에 접근 권한이 없습니다."),
+    FORBIDDEN_USER(HttpStatus.FORBIDDEN, 4301, "사용자 접근 권한이 없습니다"),
+    FORBIDDEN_USER_MODIFY(HttpStatus.FORBIDDEN, 4302, "사용자 수정 권한이 없습니다"),
 
     /**
      * 404 NOT FOUND (4400 ~ 4499)

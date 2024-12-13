@@ -12,6 +12,8 @@ public class DetailUser {
     private String userPwd;
     private String userName;
     private Long userMgr;
+    private String department;
+    private String position;
     private UserRole userRole;  // "ADMIN", "MANAGER", "USER"
     private LocalDateTime lastLoginAt;
     private String factoryCode;

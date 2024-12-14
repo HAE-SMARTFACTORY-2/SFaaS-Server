@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.hae.sfaas.domain.welder.mapper.WelderMapper">
+
+<!--    <select id="findGateTimeAVGBySpeed" parameterType="Welder" resultType="Welder">-->
+<!--        SELECT *-->
+<!--        FROM ${sfaas.db.schema}.user-->
+<!--        WHERE 1=1-->
+<!--          AND user_email = #{userEmail} AND user_pwd = #{userPwd}-->
+<!--    </select>-->
+
+<!--    <select id="findGateTimeAVGBySpeed" parameterType="Welder" resultType="Welder">-->
+<!--        SELECT AVG(gate_on_time)-->
+<!--        FROM ${sfaas.db.schema}.user u-->
+<!--        JOIN ${sfaas.db.schema}.welder w ON u.factory_id = w.factory_id-->
+<!--        WHERE u.factory_id = #{factoryId}-->
+<!--          AND speed = #{speed}-->
+<!--        <if test="startAt != null and startAt != '' and endAt != null and endAt != ''">-->
+<!--            AND (create_at BETWEEN CAST(#{startAt} AS DATE) AND CAST(#{endAt} AS DATE))-->
+<!--        </if>-->
+<!--        LIMIT 100-->
+<!--    </select>-->
+    <select id="findGateTimeAVGBySpeed" parameterType="Welder" resultType="Welder">
+        SELECT
+        speed,
+        AVG(gate_on_time) AS average_gate_on_time,
+        <if test="filter != null and filter != ''">
+            <choose>
+                <when test="filter == 'DATE'">
+                    DATE(create_at) AS date_group
+                </when>
+                <when test="filter == 'WEEK'">
+                    DATE_FORMAT(create_at, '%Y%V') AS week_group
+                </when>
+                <when test="filter == 'MONTH'">
+                    DATE_FORMAT(create_at, '%Y-%m') AS month_group
+                </when>
+                <otherwise>
+                    NULL AS other_group
+                </otherwise>
+            </choose>
+        </if>
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.welder w ON u.factory_id = w.factory_id
+        WHERE u.factory_id = #{factoryId}
+        <if test="startAt != null and endAt != null">
+            AND (create_at BETWEEN #{startAt} AND #{endAt})
+        </if>
+        <if test="filter != null and filter != ''">
+            <choose>
+                <when test="filter == 'DATE'">
+                    GROUP BY speed, DATE(create_at)
+                </when>
+                <when test="filter == 'WEEK'">
+                    GROUP BY speed, DATE_FORMAT(create_at, '%Y%V')
+                </when>
+                <when test="filter == 'MONTH'">
+                    GROUP BY speed, DATE_FORMAT(create_at, '%Y-%m')
+                </when>
+                <otherwise>
+                    GROUP BY speed
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+
+</mapper>

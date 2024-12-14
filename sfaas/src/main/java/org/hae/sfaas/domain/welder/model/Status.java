@@ -12,5 +12,5 @@ public enum Status {
     OK("OK"),
     NG("NG");
 
-    private String staus;
+    private String status;
 }

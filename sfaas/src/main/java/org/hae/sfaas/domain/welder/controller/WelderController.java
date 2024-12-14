@@ -2,6 +2,7 @@ package org.hae.sfaas.domain.welder.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.hae.sfaas.domain.welder.model.Status;
 import org.hae.sfaas.domain.welder.service.WelderService;
 import org.hae.sfaas.global.common.response.SFaaSResponse;
 import org.hae.sfaas.global.common.response.SuccessType;
@@ -25,6 +26,15 @@ public class WelderController {
                                                                @RequestParam(value = "filter", required = false) String filter) {
         //TODO - SUCCESSTYPE 변경
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.OK, welderService.getSpeedInfo(userId, startAt, endAt, filter)));
+    }
+
+    @GetMapping("/welders")
+    public ResponseEntity<SFaaSResponse<?>> getWeldersInfo(@RequestHeader("userId") Long userId,
+                                                           @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
+                                                           @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
+                                                           @RequestParam(value = "status", required = false)Status status) {
+        //TODO - SUCCESSTYPE 변경
+        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.OK, welderService.getWeldersInfo(userId, startAt, endAt, status)));
     }
 
 }

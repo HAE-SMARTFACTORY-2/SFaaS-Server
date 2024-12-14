@@ -3,24 +3,6 @@
 
 <mapper namespace="org.hae.sfaas.domain.welder.mapper.WelderMapper">
 
-<!--    <select id="findGateTimeAVGBySpeed" parameterType="Welder" resultType="Welder">-->
-<!--        SELECT *-->
-<!--        FROM ${sfaas.db.schema}.user-->
-<!--        WHERE 1=1-->
-<!--          AND user_email = #{userEmail} AND user_pwd = #{userPwd}-->
-<!--    </select>-->
-
-<!--    <select id="findGateTimeAVGBySpeed" parameterType="Welder" resultType="Welder">-->
-<!--        SELECT AVG(gate_on_time)-->
-<!--        FROM ${sfaas.db.schema}.user u-->
-<!--        JOIN ${sfaas.db.schema}.welder w ON u.factory_id = w.factory_id-->
-<!--        WHERE u.factory_id = #{factoryId}-->
-<!--          AND speed = #{speed}-->
-<!--        <if test="startAt != null and startAt != '' and endAt != null and endAt != ''">-->
-<!--            AND (create_at BETWEEN CAST(#{startAt} AS DATE) AND CAST(#{endAt} AS DATE))-->
-<!--        </if>-->
-<!--        LIMIT 100-->
-<!--    </select>-->
     <select id="findGateTimeAVGBySpeed" parameterType="Welder" resultType="Welder">
         SELECT
         speed,
@@ -62,6 +44,19 @@
                     GROUP BY speed
                 </otherwise>
             </choose>
+        </if>
+    </select>
+
+    <select id="findAllByfactoryId" parameterType="Welder" resultType="Welder">
+        SELECT *
+        FROM ${sfaas.db.schema}.factory f
+        JOIN ${sfaas.db.schema}.welder w ON f.factory_id = w.factory_id
+        WHERE w.factory_id = #{factoryId}
+        <if test="startAt != null and endAt != null">
+            AND (create_at BETWEEN #{startAt} AND #{endAt})
+        </if>
+        <if test="status != null">
+            AND status = #{status}
         </if>
     </select>
 

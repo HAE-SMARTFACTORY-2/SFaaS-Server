@@ -14,7 +14,7 @@ public class Welder {
     private Long realPower;
     private Long setDuty;
     private Long setPower;
-    private LocalDateTime gateOnTime;
+    private Long gateOnTime;
     private LocalDateTime workingTime;
     private Status status;
 

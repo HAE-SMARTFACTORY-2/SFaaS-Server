@@ -5,6 +5,7 @@ import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
 import org.hae.sfaas.domain.welder.dto.response.WeldGateTimeInfoResponse;
 import org.hae.sfaas.domain.welder.mapper.WelderMapper;
+import org.hae.sfaas.domain.welder.model.Status;
 import org.hae.sfaas.domain.welder.model.Welder;
 import org.hae.sfaas.global.common.exception.SFaaSException;
 import org.hae.sfaas.global.common.response.ErrorType;
@@ -43,4 +44,23 @@ public class WelderService {
         return null;
     }
 
+    public List<Welder> getWeldersInfo(Long userId, LocalDate startAt, LocalDate endAt, Status status) {
+        User user = userMapper.findById(userId);
+        //TODO - userValidator 재사용 하기
+        if(user == null) {
+            throw new SFaaSException(ErrorType.NOT_FOUND_USER);
+        }
+
+        // TODO - user가 ADMIN인 경우 전체 factory_id 없이 조회 ? -> 구조 고민 !!
+
+        // 아닌 경우
+        Long factoryId = user.getFactoryId();
+
+        // 조회
+        List<Welder> welders = null;
+        welders = welderMapper.findAllByfactoryId(factoryId, startAt, endAt, status);
+
+        //TODO - InfoResponse 형태로 제작
+        return null;
+    }
 }

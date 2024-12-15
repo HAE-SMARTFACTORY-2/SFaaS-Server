@@ -18,8 +18,11 @@ public enum SuccessType {
     PATCH_USERROLE_SUCCESS(HttpStatus.OK, 2003,"사용자 역할 수정에 성공하였습니다"),
     GET_MYINFO_SUCCESS(HttpStatus.OK, 2004, "내 정보 조회에 성공하였습니다" ),
     GET_WELDER_GATETIME_SUCCESS(HttpStatus.OK, 2005, "용접 길이에 따른 가동시간 추이 그래프 조회에 성공하였습니다." ),
-    GET_WELDER_DETAIL_SUCCESS(HttpStatus.OK, 2006, "용접 설비 데이터 조회에 성공하였습니다" );
-
+    GET_WELDER_DETAIL_SUCCESS(HttpStatus.OK, 2006, "용접 설비 데이터 조회에 성공하였습니다" ),
+    GET_BATTERYPACK_VOLTAGE_SUCCESS(HttpStatus.OK,2007,"배터리팩 전압 데이터 조회에 성공하였습니다"),
+    GET_BATTERYPACK_TEMPERATURE_SUCCESS(HttpStatus.OK,2008,"배터리팩 온도 데이터 조회에 성공하였습니다"),
+    GET_BATTERYPACK_SOC_SUCCESS(HttpStatus.OK,2009,"배터리팩 SoC 전압 데이터 조회에 성공하였습니다."),
+    GET_BATTERYPACK_DETAIL_SUCCESS(HttpStatus.OK,2010,"배터리팩 상세 데이터 조회에 성공하였습니다");
     /**
      * 201 CREATED (2100 ~ 2199)
      */

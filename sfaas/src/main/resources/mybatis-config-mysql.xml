@@ -16,11 +16,17 @@
     <typeAliases>
         <!-- Model 등록 -->
         <package name="org.hae.sfaas.domain.user.model"/>
+        <package name="org.hae.sfaas.domain.welder.model"/>
+<!--        <package name="org.hae.sfaas.domain.aging.model"/>-->
+<!--        <package name="org.hae.sfaas.domain.batteryPack.model"/>-->
     </typeAliases>
 
     <mappers>
         <!-- Mapper 등록-->
-        <mapper resource="mappers/postgre/main/user/UserMapper.xml" />
+        <mapper resource="mappers/mysql/main/user/UserMapper.xml" />
+        <mapper resource="mappers/mysql/main/welder/WelderMapper.xml" />
+<!--        <mapper resource="mappers/mysql/main/aging/AgingMapper.xml" />-->
+<!--        <mapper resource="mappers/mysql/main/batteryPack/BatteryPackMapper.xml" />-->
     </mappers>
 
 </configuration>

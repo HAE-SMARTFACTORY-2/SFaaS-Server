@@ -1,0 +1,7 @@
+package org.hae.sfaas.domain.batteryPack.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface BatteryPackMapper {
+}

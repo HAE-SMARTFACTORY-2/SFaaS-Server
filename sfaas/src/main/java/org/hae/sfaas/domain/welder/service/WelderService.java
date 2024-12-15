@@ -125,7 +125,7 @@ public class WelderService {
                 Map<String, Integer> counts = new HashMap<>();
                 counts.put("ok", categoryEntry.getValue()[0]);
                 counts.put("ng", categoryEntry.getValue()[1]);
-                counts.put("total", categoryEntry.getValue()[0] + categoryEntry.getValue()[1]); 
+                counts.put("total", categoryEntry.getValue()[0] + categoryEntry.getValue()[1]);
                 chartData.put(categoryEntry.getKey(), counts);
             }
 

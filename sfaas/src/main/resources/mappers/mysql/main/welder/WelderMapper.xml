@@ -74,7 +74,6 @@
     <select id="findStatusCount" parameterType="Welder" resultType="WelderStatus">
         SELECT
         speed,
-        SUM(status) AS total_count,
         SUM(CASE WHEN status = 'OK' THEN 1 ELSE 0 END) AS ok_count,
         SUM(CASE WHEN status = 'NG' THEN 1 ELSE 0 END) AS ng_count
         FROM ${sfaas.db.schema}.user u

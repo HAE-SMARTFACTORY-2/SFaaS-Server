@@ -6,8 +6,8 @@ spring:
     password: ${DATABASE_PASSWORD}
 
   mybatis:
-    config-location: classpath:mybatis-config-postgresql.xml
-    mapper-locations: classpath:mappers/postgre/main/*/*.xml
+    config-location: classpath:mybatis-config-mysql.xml
+    mapper-locations: classpath:mappers/mysql/main/*/*.xml
 
   sql:
     init:

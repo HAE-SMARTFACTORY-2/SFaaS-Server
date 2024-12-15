@@ -3,23 +3,24 @@
 
 <mapper namespace="org.hae.sfaas.domain.welder.mapper.WelderMapper">
 
-    <select id="findGateTimeAVGBySpeed" parameterType="Welder" resultType="Welder">
+    <select id="findGateTimeAVGBySpeed" parameterType="Welder" resultType="WelderGateTime">
         SELECT
         speed,
+        AVG(length) AS average_length,
         AVG(gate_on_time) AS average_gate_on_time,
         <if test="filter != null and filter != ''">
             <choose>
                 <when test="filter == 'DATE'">
-                    DATE(create_at) AS date_group
+                    DATE(create_at) AS filter_group
                 </when>
                 <when test="filter == 'WEEK'">
-                    DATE_FORMAT(create_at, '%Y%V') AS week_group
+                    DATE_FORMAT(create_at, '%Y%V') AS filter_group
                 </when>
                 <when test="filter == 'MONTH'">
-                    DATE_FORMAT(create_at, '%Y-%m') AS month_group
+                    DATE_FORMAT(create_at, '%Y-%m') AS filter_group
                 </when>
                 <otherwise>
-                    NULL AS other_group
+                    NULL AS filter_group
                 </otherwise>
             </choose>
         </if>

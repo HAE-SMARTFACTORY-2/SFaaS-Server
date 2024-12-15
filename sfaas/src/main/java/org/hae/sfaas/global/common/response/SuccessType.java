@@ -16,7 +16,8 @@ public enum SuccessType {
     POST_LOGIN_SUCCESS(HttpStatus.OK, 2001, "사용자 로그인에 성공하였습니다"),
     GET_USERINFOS_SUCCESS(HttpStatus.OK, 2002, "사용자 정보 리스트 조회에 성공하였습니다"),
     PATCH_USERROLE_SUCCESS(HttpStatus.OK, 2003,"사용자 역할 수정에 성공하였습니다"),
-    GET_MYINFO_SUCCESS(HttpStatus.OK, 2004, "내 정보 조회에 성공하였습니다" );
+    GET_MYINFO_SUCCESS(HttpStatus.OK, 2004, "내 정보 조회에 성공하였습니다" ),
+    GET_WELDER_GATETIME_SUCCESS(HttpStatus.OK, 2005, "용접 길이에 따른 가동시간 추이 그래프 조회에 성공하였습니다." );
 
     /**
      * 201 CREATED (2100 ~ 2199)

@@ -1,12 +1,15 @@
 package org.hae.sfaas.domain.welder.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hae.sfaas.domain.user.dto.response.UserDetailInfoResponse;
 import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
 import org.hae.sfaas.domain.welder.dto.response.WeldGateTimeInfoResponse;
+import org.hae.sfaas.domain.welder.dto.response.WelderFilterGroupResponse;
 import org.hae.sfaas.domain.welder.mapper.WelderMapper;
 import org.hae.sfaas.domain.welder.model.Status;
 import org.hae.sfaas.domain.welder.model.Welder;
+import org.hae.sfaas.domain.welder.model.WelderGateTime;
 import org.hae.sfaas.global.common.exception.SFaaSException;
 import org.hae.sfaas.global.common.response.ErrorType;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -24,7 +28,7 @@ public class WelderService {
     private final UserMapper userMapper;
     private final WelderMapper welderMapper;
 
-    public List<WeldGateTimeInfoResponse> getSpeedInfo(Long userId, LocalDate startAt, LocalDate endAt, String filter) {
+    public List<WelderFilterGroupResponse> getSpeedInfo(Long userId, LocalDate startAt, LocalDate endAt, String filter) {
         User user = userMapper.findById(userId);
         //TODO - userValidator 재사용 하기
         if(user == null) {
@@ -37,11 +41,20 @@ public class WelderService {
         Long factoryId = user.getFactoryId();
 
         // 조회
-        List<Welder> welders = null;
+        List<WelderGateTime> welders = null;
         welders = welderMapper.findGateTimeAVGBySpeed(factoryId, startAt, endAt, filter);
 
+
         //TODO - 그래프 모양 확정 후 InfoResponse 형태로 제작
-        return null;
+        return welders.stream()
+                .collect(Collectors.groupingBy(
+                        WelderGateTime::getFilterGroup,
+                        Collectors.mapping(WeldGateTimeInfoResponse::of, Collectors.toList())
+                ))
+                .entrySet()
+                .stream()
+                .map(entry -> new WelderFilterGroupResponse(entry.getKey(), entry.getValue()))
+                .toList();
     }
 
     public List<Welder> getWeldersInfo(Long userId, LocalDate startAt, LocalDate endAt, Status status) {

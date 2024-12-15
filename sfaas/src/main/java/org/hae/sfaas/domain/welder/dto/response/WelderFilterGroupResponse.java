@@ -1,9 +1,9 @@
 package org.hae.sfaas.domain.welder.dto.response;
 
-import java.util.List;
+import java.util.Map;
 
 public record WelderFilterGroupResponse(
         String filterGroup,
-        List<WeldGateTimeInfoResponse> chartData
+        Map<String, Object> chartData
 ) {
 }

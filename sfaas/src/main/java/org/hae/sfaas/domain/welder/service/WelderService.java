@@ -3,15 +3,9 @@ package org.hae.sfaas.domain.welder.service;
 import lombok.RequiredArgsConstructor;
 import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
-import org.hae.sfaas.domain.welder.dto.response.WeldGateTimeInfoResponse;
-import org.hae.sfaas.domain.welder.dto.response.WelderFilterGroupResponse;
-import org.hae.sfaas.domain.welder.dto.response.WelderDetailInfoResponse;
-import org.hae.sfaas.domain.welder.dto.response.WelderStatusInfoResponse;
+import org.hae.sfaas.domain.welder.dto.response.*;
 import org.hae.sfaas.domain.welder.mapper.WelderMapper;
-import org.hae.sfaas.domain.welder.model.DetailWelder;
-import org.hae.sfaas.domain.welder.model.Status;
-import org.hae.sfaas.domain.welder.model.WelderGateTime;
-import org.hae.sfaas.domain.welder.model.WelderStatus;
+import org.hae.sfaas.domain.welder.model.*;
 import org.hae.sfaas.global.common.exception.SFaaSException;
 import org.hae.sfaas.global.common.response.ErrorType;
 import org.springframework.stereotype.Service;
@@ -135,4 +129,47 @@ public class WelderService {
         return responseList;
     }
 
+    public List<WelderFilterGroupResponse> getPowerInfo(Long userId, LocalDate startAt, LocalDate endAt, String filter) {
+        User user = userMapper.findById(userId);
+        if (user == null) {
+            throw new SFaaSException(ErrorType.NOT_FOUND_USER);
+        }
+
+        Long factoryId = user.getFactoryId();
+        List<WelderPower> welders = welderMapper.findPower(factoryId, startAt, endAt, filter);
+
+        Map<String, List<WelderPowerInfoResponse>> chartDataMap = new LinkedHashMap<>();
+
+        for (WelderPower welder : welders) {
+            String filterGroup = welder.getFilterGroup();
+            WelderPowerInfoResponse response = WelderPowerInfoResponse.of(welder);
+
+            if (welder.getRealPower() <= 1200) {
+                chartDataMap.computeIfAbsent(filterGroup, k -> new ArrayList<>()).add(response);
+            } else {
+                chartDataMap.computeIfAbsent(filterGroup, k -> new ArrayList<>()).add(response);
+            }
+        }
+
+        List<WelderFilterGroupResponse> responseList = new ArrayList<>();
+        for (Map.Entry<String, List<WelderPowerInfoResponse>> entry : chartDataMap.entrySet()) {
+            List<WelderPowerInfoResponse> A = entry.getValue().stream()
+                    .filter(data -> data.realPower() <= 1200)
+                    .collect(Collectors.toList());
+
+            List<WelderPowerInfoResponse> B = entry.getValue().stream()
+                    .filter(data -> data.realPower() > 1200)
+                    .collect(Collectors.toList());
+
+            Map<String, Object> chartData = new HashMap<>();
+            chartData.put("A", A);
+            chartData.put("B", B);
+
+            responseList.add(new WelderFilterGroupResponse(entry.getKey(), chartData));
+        }
+
+        return responseList;
+    }
+
 }
+

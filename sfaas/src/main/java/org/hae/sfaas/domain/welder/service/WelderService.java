@@ -1,7 +1,6 @@
 package org.hae.sfaas.domain.welder.service;
 
 import lombok.RequiredArgsConstructor;
-import org.hae.sfaas.domain.user.dto.response.UserDetailInfoResponse;
 import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
 import org.hae.sfaas.domain.welder.dto.response.WeldGateTimeInfoResponse;
@@ -14,6 +13,7 @@ import org.hae.sfaas.global.common.exception.SFaaSException;
 import org.hae.sfaas.global.common.response.ErrorType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.LinkedHashMap;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -49,6 +49,7 @@ public class WelderService {
         return welders.stream()
                 .collect(Collectors.groupingBy(
                         WelderGateTime::getFilterGroup,
+                        LinkedHashMap::new,
                         Collectors.mapping(WeldGateTimeInfoResponse::of, Collectors.toList())
                 ))
                 .entrySet()

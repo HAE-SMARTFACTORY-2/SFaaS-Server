@@ -46,6 +46,7 @@
                 </otherwise>
             </choose>
         </if>
+        ORDER BY filter_group IS NULL, filter_group ASC
     </select>
 
     <select id="findAllByfactoryId" parameterType="Welder" resultType="Welder">
@@ -59,6 +60,7 @@
         <if test="status != null">
             AND status = #{status}
         </if>
+        ORDER BY create_at DESC
     </select>
 
 </mapper>

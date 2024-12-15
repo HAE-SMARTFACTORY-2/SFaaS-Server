@@ -5,7 +5,9 @@ import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
 import org.hae.sfaas.domain.welder.dto.response.WeldGateTimeInfoResponse;
 import org.hae.sfaas.domain.welder.dto.response.WelderFilterGroupResponse;
+import org.hae.sfaas.domain.welder.dto.response.WelderDetailInfoResponse;
 import org.hae.sfaas.domain.welder.mapper.WelderMapper;
+import org.hae.sfaas.domain.welder.model.DetailWelder;
 import org.hae.sfaas.domain.welder.model.Status;
 import org.hae.sfaas.domain.welder.model.Welder;
 import org.hae.sfaas.domain.welder.model.WelderGateTime;
@@ -16,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedHashMap;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,7 +59,7 @@ public class WelderService {
                 .toList();
     }
 
-    public List<Welder> getWeldersInfo(Long userId, LocalDate startAt, LocalDate endAt, Status status) {
+    public List<WelderDetailInfoResponse> getWeldersInfo(Long userId, LocalDate startAt, LocalDate endAt, Status status) {
         User user = userMapper.findById(userId);
         //TODO - userValidator 재사용 하기
         if(user == null) {
@@ -71,10 +72,11 @@ public class WelderService {
         Long factoryId = user.getFactoryId();
 
         // 조회
-        List<Welder> welders = null;
+        List<DetailWelder> welders = null;
         welders = welderMapper.findAllByfactoryId(factoryId, startAt, endAt, status);
 
         //TODO - InfoResponse 형태로 제작
-        return null;
+        return welders.stream().map(WelderDetailInfoResponse::of).toList();
     }
+
 }

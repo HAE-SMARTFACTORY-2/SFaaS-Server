@@ -6,10 +6,12 @@ import org.hae.sfaas.domain.user.model.User;
 import org.hae.sfaas.domain.welder.dto.response.WeldGateTimeInfoResponse;
 import org.hae.sfaas.domain.welder.dto.response.WelderFilterGroupResponse;
 import org.hae.sfaas.domain.welder.dto.response.WelderDetailInfoResponse;
+import org.hae.sfaas.domain.welder.dto.response.WelderStatusInfoResponse;
 import org.hae.sfaas.domain.welder.mapper.WelderMapper;
 import org.hae.sfaas.domain.welder.model.DetailWelder;
 import org.hae.sfaas.domain.welder.model.Status;
 import org.hae.sfaas.domain.welder.model.WelderGateTime;
+import org.hae.sfaas.domain.welder.model.WelderStatus;
 import org.hae.sfaas.global.common.exception.SFaaSException;
 import org.hae.sfaas.global.common.response.ErrorType;
 import org.springframework.stereotype.Service;
@@ -88,6 +90,49 @@ public class WelderService {
         List<DetailWelder> welders = welderMapper.findAllByfactoryId(factoryId, startAt, endAt, status);
 
         return welders.stream().map(WelderDetailInfoResponse::of).toList();
+    }
+
+    public List<WelderFilterGroupResponse> getStatusInfo(Long userId, LocalDate startAt, LocalDate endAt) {
+        User user = userMapper.findById(userId);
+        if (user == null) {
+            throw new SFaaSException(ErrorType.NOT_FOUND_USER);
+        }
+
+        Long factoryId = user.getFactoryId();
+        List<WelderStatus> welders = welderMapper.findStatusCount(factoryId, startAt, endAt);
+
+        Map<String, Map<String, int[]>> chartDataMap = new LinkedHashMap<>();
+
+        for (WelderStatus welder : welders) {
+            String filterGroup = welder.getFilterGroup();
+            int okCount = welder.getOkCount();
+            int ngCount = welder.getNgCount();
+
+            String category = welder.getSpeed() <= 130 ? "A" : "B";
+
+            chartDataMap.computeIfAbsent(filterGroup, k -> new HashMap<>())
+                    .computeIfAbsent(category, k -> new int[2]);
+
+            chartDataMap.get(filterGroup).get(category)[0] += okCount;
+            chartDataMap.get(filterGroup).get(category)[1] += ngCount;
+        }
+
+        List<WelderFilterGroupResponse> responseList = new ArrayList<>();
+        for (Map.Entry<String, Map<String, int[]>> entry : chartDataMap.entrySet()) {
+            Map<String, Object> chartData = new HashMap<>();
+
+            for (Map.Entry<String, int[]> categoryEntry : entry.getValue().entrySet()) {
+                Map<String, Integer> counts = new HashMap<>();
+                counts.put("ok", categoryEntry.getValue()[0]);
+                counts.put("ng", categoryEntry.getValue()[1]);
+                counts.put("total", categoryEntry.getValue()[0] + categoryEntry.getValue()[1]); 
+                chartData.put(categoryEntry.getKey(), counts);
+            }
+
+            responseList.add(new WelderFilterGroupResponse(entry.getKey(), chartData));
+        }
+
+        return responseList;
     }
 
 }

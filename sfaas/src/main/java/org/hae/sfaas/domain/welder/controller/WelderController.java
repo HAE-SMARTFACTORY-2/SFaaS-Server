@@ -32,8 +32,14 @@ public class WelderController {
                                                            @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                            @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
                                                            @RequestParam(value = "status", required = false)Status status) {
-        //TODO - SUCCESSTYPE 변경
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_WELDER_DETAIL_SUCCESS, welderService.getWeldersInfo(userId, startAt, endAt, status)));
+    }
+
+    @GetMapping("/welder/status")
+    public ResponseEntity<SFaaSResponse<?>> getWelderStatusInfo(@RequestHeader("userId") Long userId,
+                                                                @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
+                                                                @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt) {
+        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_WELDER_STATUS_SUCCESS, welderService.getStatusInfo(userId, startAt, endAt)));
     }
 
 }

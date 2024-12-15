@@ -71,4 +71,19 @@
         LIMIT 100 <!-- 임시 -->
     </select>
 
+    <select id="findStatusCount" parameterType="Welder" resultType="WelderStatus">
+        SELECT
+        speed,
+        SUM(status) AS total_count,
+        SUM(CASE WHEN status = 'OK' THEN 1 ELSE 0 END) AS ok_count,
+        SUM(CASE WHEN status = 'NG' THEN 1 ELSE 0 END) AS ng_count
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.welder w ON u.factory_id = w.factory_id
+        WHERE u.factory_id = #{factoryId}
+        <if test="startAt != null and endAt != null">
+            AND (create_at BETWEEN #{startAt} AND #{endAt})
+        </if>
+        GROUP BY speed
+    </select>
+
 </mapper>

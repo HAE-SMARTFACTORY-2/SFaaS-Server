@@ -23,7 +23,7 @@ public class WelderController {
     public ResponseEntity<SFaaSResponse<?>> getWelderSpeedInfo(@RequestHeader("userId") Long userId,
                                                                @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                                @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
-                                                               @RequestParam(value = "filter", required = false) String filter) {
+                                                               @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter) {
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_WELDER_GATETIME_SUCCESS, welderService.getSpeedInfo(userId, startAt, endAt, filter)));
     }
 

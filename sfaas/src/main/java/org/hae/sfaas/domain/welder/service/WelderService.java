@@ -9,7 +9,6 @@ import org.hae.sfaas.domain.welder.dto.response.WelderDetailInfoResponse;
 import org.hae.sfaas.domain.welder.mapper.WelderMapper;
 import org.hae.sfaas.domain.welder.model.DetailWelder;
 import org.hae.sfaas.domain.welder.model.Status;
-import org.hae.sfaas.domain.welder.model.Welder;
 import org.hae.sfaas.domain.welder.model.WelderGateTime;
 import org.hae.sfaas.global.common.exception.SFaaSException;
 import org.hae.sfaas.global.common.response.ErrorType;
@@ -41,12 +40,8 @@ public class WelderService {
         // 아닌 경우
         Long factoryId = user.getFactoryId();
 
-        // 조회
-        List<WelderGateTime> welders = null;
-        welders = welderMapper.findGateTimeAVGBySpeed(factoryId, startAt, endAt, filter);
+        List<WelderGateTime> welders =  welderMapper.findGateTimeAVGBySpeed(factoryId, startAt, endAt, filter);
 
-
-        //TODO - 그래프 모양 확정 후 InfoResponse 형태로 제작
         return welders.stream()
                 .collect(Collectors.groupingBy(
                         WelderGateTime::getFilterGroup,
@@ -68,14 +63,9 @@ public class WelderService {
 
         // TODO - user가 ADMIN인 경우 전체 factory_id 없이 조회 ? -> 구조 고민 !!
 
-        // 아닌 경우
         Long factoryId = user.getFactoryId();
+        List<DetailWelder> welders = welderMapper.findAllByfactoryId(factoryId, startAt, endAt, status);
 
-        // 조회
-        List<DetailWelder> welders = null;
-        welders = welderMapper.findAllByfactoryId(factoryId, startAt, endAt, status);
-
-        //TODO - InfoResponse 형태로 제작
         return welders.stream().map(WelderDetailInfoResponse::of).toList();
     }
 

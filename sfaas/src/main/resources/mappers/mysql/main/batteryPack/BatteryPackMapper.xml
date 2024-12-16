@@ -191,16 +191,16 @@
         LIMIT 100
     </select>
 
-    <select id="findStatusCount" resultType="BatteryPackStatus">
-        SELECT
-        cell_voltage_dv,
-        SUM(CASE WHEN status = 'OK' THEN 1 ELSE 0 END) AS ok_count,
-        SUM(CASE WHEN status = 'NG' THEN 1 ELSE 0 END) AS ng_count
-        FROM ${sfaas.db.schema}.user u
-        JOIN ${sfaas.db.schema}.battery_pack b ON u.factory_id = b.factory_id
-        WHERE u.factory_id = #{factoryId}
-        <if test="startAt != null and endAt != null">
-            AND (create_at BETWEEN #{startAt} AND #{endAt})
-        </if>
-    </select>
+<!--    <select id="findStatusCount" resultType="BatteryPackStatus">-->
+<!--        SELECT-->
+<!--        cell_voltage_dv,-->
+<!--        SUM(CASE WHEN status = 'OK' THEN 1 ELSE 0 END) AS ok_count,-->
+<!--        SUM(CASE WHEN status = 'NG' THEN 1 ELSE 0 END) AS ng_count-->
+<!--        FROM ${sfaas.db.schema}.user u-->
+<!--        JOIN ${sfaas.db.schema}.battery_pack b ON u.factory_id = b.factory_id-->
+<!--        WHERE u.factory_id = #{factoryId}-->
+<!--        <if test="startAt != null and endAt != null">-->
+<!--            AND (create_at BETWEEN #{startAt} AND #{endAt})-->
+<!--        </if>-->
+<!--    </select>-->
 </mapper>

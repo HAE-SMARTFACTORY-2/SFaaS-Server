@@ -104,41 +104,25 @@ public class BatteryPackService {
         return detailInfos.stream().map(BatteryPackDetailResponse::of).toList();
     }
 
-//    public List<BatteryFilterGroupResponse> getStatusInfo(Long userId, LocalDate startAt, LocalDate endAt,String filter){
-//        User user = userMapper.findById(userId);
-//
-//        if(user == null){
-//            throw new SFaaSException(ErrorType.NOT_FOUND_USER);
-//        }
-//
-//        Long factory_id = user.getFactoryId();
-//        List<BatteryPackStatus> batteryPackStatus = batteryPackMapper.findStatusInfos(factory_id,startAt,endAt,filter);
-//
-//        Map<String,int[]> chartDataMap = new LinkedHashMap<>();
-//
-//        for(BatteryPackStatus packStatus : batteryPackStatus){
-//            String filterGroup = packStatus.getFilterGroup();
-//            int okCnt = packStatus.getOkCount();
-//            int ngCnt = packStatus.getNgCount();
-//
-//            chartDataMap.computeIfAbsent(filterGroup, k -> new int[3]);
-//            chartDataMap.get(filterGroup)[0] += okCnt;
-//            chartDataMap.get(filterGroup)[1] += ngCnt;
-//            chartDataMap.get(filterGroup)[2] += okCnt + ngCnt;
-//        }
-//
-//        List<BatteryFilterGroupResponse> responses = new ArrayList<>();
-//        for (Map.Entry<String, int[]> entry : chartDataMap.entrySet()) {
-//            String filterGroup = entry.getKey();
-//            int[] statusData = entry.getValue();
-//
-//            BatteryFilterGroupResponse response = new BatteryFilterGroupResponse(
-//                    filterGroup,
-//                    Arrays.asList(statusData[0], statusData[1], statusData[2])
-//            );
-//            responses.add(response);
-//        }
-//
-//        return responses;
-//    }
+    public List<BatteryFilterGroupResponse> getStatusInfo(Long userId, LocalDate startAt, LocalDate endAt,String filter){
+        User user = userMapper.findById(userId);
+
+        if(user == null){
+            throw new SFaaSException(ErrorType.NOT_FOUND_USER);
+        }
+
+        Long factory_id = user.getFactoryId();
+        List<BatteryPackStatus> batteryPackStatus = batteryPackMapper.findStatusCount(factory_id, startAt, endAt, filter);
+
+        return batteryPackStatus.stream()
+                .collect(Collectors.groupingBy(
+                        BatteryPackStatus::getFilterGroup,
+                        LinkedHashMap::new,
+                        Collectors.mapping(BatteryPackStatusResponse::of, Collectors.toList())
+                ))
+                .entrySet()
+                .stream()
+                .map(entry -> new BatteryFilterGroupResponse(entry.getKey(),entry.getValue()))
+                .toList();
+    }
 }

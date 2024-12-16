@@ -3,6 +3,7 @@ package org.hae.sfaas.global.common.response;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpStatus;
 
 @Getter
@@ -25,7 +26,9 @@ public enum SuccessType {
     GET_BATTERYPACK_TEMPERATURE_SUCCESS(HttpStatus.OK,2010,"배터리팩 온도 데이터 조회에 성공하였습니다"),
     GET_BATTERYPACK_SOC_SUCCESS(HttpStatus.OK,2011,"배터리팩 SoC 전압 데이터 조회에 성공하였습니다."),
     GET_BATTERYPACK_DETAIL_SUCCESS(HttpStatus.OK,2012,"배터리팩 상세 데이터 조회에 성공하였습니다"),
-    GET_BATTERYPACK_STATUS_SUCCESS(HttpStatus.OK,2013,"배터리팩 불량품/양품 데이터 조회에 성공하였습니다");
+    GET_BATTERYPACK_STATUS_SUCCESS(HttpStatus.OK,2013,"배터리팩 불량품/양품 데이터 조회에 성공하였습니다"),
+    GET_BATTERY_STATUS_SUCCESS(HttpStatus.OK, 2014, "배터리 불량품/양품 데이터 조회에 성공하였습니다");
+
     /**
      * 201 CREATED (2100 ~ 2199)
      */

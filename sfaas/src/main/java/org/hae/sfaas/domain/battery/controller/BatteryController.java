@@ -20,7 +20,7 @@ public class BatteryController {
     @GetMapping("/battery/status")
     public ResponseEntity<SFaaSResponse<?>> getVoltageInfos(@RequestHeader("userId") Long userId,
                                                             @RequestParam(value = "factoryId", required = false) Long factoryId){
-        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_VOLTAGE_SUCCESS, batteryService.getBatteryStatusInfo(userId, factoryId)));
+        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERY_STATUS_SUCCESS, batteryService.getBatteryStatusInfo(userId, factoryId)));
     }
 
 }

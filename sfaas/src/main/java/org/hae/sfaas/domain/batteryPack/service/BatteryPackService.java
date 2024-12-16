@@ -6,6 +6,7 @@ import org.hae.sfaas.domain.batteryPack.mapper.BatteryPackMapper;
 import org.hae.sfaas.domain.batteryPack.model.*;
 import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
+import org.hae.sfaas.domain.user.model.UserRole;
 import org.hae.sfaas.domain.welder.model.Status;
 import org.hae.sfaas.global.common.exception.SFaaSException;
 import org.hae.sfaas.global.common.response.ErrorType;
@@ -23,16 +24,21 @@ public class BatteryPackService {
     private final UserMapper userMapper;
     private final BatteryPackMapper batteryPackMapper;
 
-    public List<BatteryFilterGroupResponse> getVoltageInfo(Long userId, LocalDate startAt, LocalDate endAt, String filter){
+    public List<BatteryFilterGroupResponse> getVoltageInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt, String filter){
         User user = userMapper.findById(userId);
 
         if(user == null){
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        Long factory_id = user.getFactoryId();
+        Long fId = null;
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
+            fId = factoryId;
+        } else {
+            fId = user.getFactoryId();
+        }
 
-        List<BatteryPackVoltageInfo> voltageInfos = batteryPackMapper.findVoltageInfos(factory_id,startAt,endAt,filter);
+        List<BatteryPackVoltageInfo> voltageInfos = batteryPackMapper.findVoltageInfos(fId,startAt,endAt,filter);
 
         return voltageInfos.stream()
                 .collect(Collectors.groupingBy(
@@ -46,16 +52,21 @@ public class BatteryPackService {
                 .toList();
     }
 
-    public List<BatteryFilterGroupResponse> getTempInfo(Long userId, LocalDate startAt, LocalDate endAt, String filter){
+    public List<BatteryFilterGroupResponse> getTempInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt, String filter){
         User user = userMapper.findById(userId);
 
         if(user == null){
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        Long factory_id = user.getFactoryId();
+        Long fId = null;
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
+            fId = factoryId;
+        } else {
+            fId = user.getFactoryId();
+        }
 
-        List<BatteryPackTempInfo> tempInfos = batteryPackMapper.findTempInfos(factory_id,startAt,endAt,filter);
+        List<BatteryPackTempInfo> tempInfos = batteryPackMapper.findTempInfos(fId,startAt,endAt,filter);
         return tempInfos.stream()
                 .collect(Collectors.groupingBy(
                         BatteryPackTempInfo::getFilterGroup,
@@ -68,16 +79,21 @@ public class BatteryPackService {
                 .toList();
     }
 
-    public List<BatteryFilterGroupResponse> getSocInfo(Long userId, LocalDate startAt, LocalDate endAt, String filter){
+    public List<BatteryFilterGroupResponse> getSocInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt, String filter){
         User user = userMapper.findById(userId);
 
         if(user == null){
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        Long factory_id = user.getFactoryId();
+        Long fId = null;
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
+            fId = factoryId;
+        } else {
+            fId = user.getFactoryId();
+        }
 
-        List<BatteryPackSocInfo> tempInfos = batteryPackMapper.findSocInfos(factory_id,startAt,endAt,filter);
+        List<BatteryPackSocInfo> tempInfos = batteryPackMapper.findSocInfos(fId,startAt,endAt,filter);
         return tempInfos.stream()
                 .collect(Collectors.groupingBy(
                         BatteryPackSocInfo::getFilterGroup,
@@ -90,29 +106,40 @@ public class BatteryPackService {
                 .toList();
     }
 
-    public List<BatteryPackDetailResponse> getDetailInfo(Long userId, LocalDate startAt, LocalDate endAt, Status status){
+    public List<BatteryPackDetailResponse> getDetailInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt, Status status){
         User user = userMapper.findById(userId);
 
         if(user == null){
             throw  new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        Long factory_id = user.getFactoryId();
+        Long fId = null;
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
+            fId = factoryId;
+        } else {
+            fId = user.getFactoryId();
+        }
 
-        List<BatteryPackDetail> detailInfos = batteryPackMapper.findDetailInfos(factory_id, startAt, endAt, status);
+        List<BatteryPackDetail> detailInfos = batteryPackMapper.findDetailInfos(fId, startAt, endAt, status);
 
         return detailInfos.stream().map(BatteryPackDetailResponse::of).toList();
     }
 
-    public List<BatteryFilterGroupResponse> getStatusInfo(Long userId, LocalDate startAt, LocalDate endAt,String filter){
+    public List<BatteryFilterGroupResponse> getStatusInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt,String filter){
         User user = userMapper.findById(userId);
 
         if(user == null){
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        Long factory_id = user.getFactoryId();
-        List<BatteryPackStatus> batteryPackStatus = batteryPackMapper.findStatusCount(factory_id, startAt, endAt, filter);
+        Long fId = null;
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
+            fId = factoryId;
+        } else {
+            fId = user.getFactoryId();
+        }
+
+        List<BatteryPackStatus> batteryPackStatus = batteryPackMapper.findStatusCount(fId, startAt, endAt, filter);
 
         return batteryPackStatus.stream()
                 .collect(Collectors.groupingBy(

@@ -18,9 +18,15 @@ public class BatteryController {
     private final BatteryService batteryService;
 
     @GetMapping("/battery/status")
-    public ResponseEntity<SFaaSResponse<?>> getVoltageInfos(@RequestHeader("userId") Long userId,
-                                                            @RequestParam(value = "factoryId", required = false) Long factoryId){
-        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_STATUS_SUCCESS, batteryService.getBatteryStatusInfo(userId, factoryId)));
+    public ResponseEntity<SFaaSResponse<?>> getBatteryStatusInfo(@RequestHeader("userId") Long userId,
+                                                                @RequestParam(value = "factoryId", required = false) Long factoryId){
+        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERY_STATUS_SUCCESS, batteryService.getBatteryStatusInfo(userId, factoryId)));
+    }
+
+    @GetMapping("/battery/output")
+    public ResponseEntity<SFaaSResponse<?>> getBatteryOutputInfo(@RequestHeader("userId") Long userId,
+                                                                @RequestParam(value = "factoryId", required = false) Long factoryId){
+        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERY_OUTPUT_SUCCESS, batteryService.getBatteryOutputInfo(userId, factoryId)));
     }
 
 }

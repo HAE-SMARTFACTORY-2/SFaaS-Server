@@ -56,6 +56,6 @@ public class BatteryPackController {
 //                                                      @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
 //                                                      @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter){
 //
-//        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_STATUS_SUCCESS,batteryPackService.getStatus()));
+//        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_STATUS_SUCCESS,batteryPackService.getStatusInfo(userId, startAt, endAt,filter)));
 //    }
 }

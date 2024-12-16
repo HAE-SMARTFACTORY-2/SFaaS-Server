@@ -4,9 +4,9 @@
 <mapper namespace="org.hae.sfaas.domain.batteryPack.mapper.BatteryPackMapper">
     <select id="findVoltageInfos" resultType="BatteryPackVoltageInfo">
         SELECT
-        cell_voltage_min,
-        cell_voltage_max,
-        cell_voltage_dv
+        AVG(cell_voltage_min) as cell_voltage_min,
+        AVG(cell_voltage_max) as cell_voltage_max,
+        AVG(cell_voltage_dv) as cell_voltage_dv
         <if test="filter != null and filter != ''">
             <choose>
                 <when test="filter == 'HOUR'">
@@ -54,9 +54,9 @@
 
     <select id="findTempInfos" resultType="BatteryPackTempInfo">
         SELECT
-        cell_temp_min,
-        cell_temp_max,
-        cell_temp_avg
+        AVG(cell_temp_min) as cell_temp_min,
+        AVG(cell_temp_max) as cell_temp_max,
+        AVG(cell_temp_avg) as cell_temp_avg
         <if test="filter != null and filter != ''">
             <choose>
                 <when test="filter == 'HOUR'">
@@ -104,12 +104,12 @@
 
     <select id="findSocInfos" resultType="BatteryPackSocInfo">
         SELECT
-        rsoc_min,
-        rsoc_max,
-        rsoc_avg,
-        usoc_min,
-        usoc_max,
-        usoc_avg
+        AVG(rsoc_min) as rsoc_min,
+        AVG(rsoc_max) as rsoc_max,
+        AVG(rsoc_avg) as rsoc_avg,
+        AVG(usoc_min) as usoc_min,
+        AVG(usoc_max) as usoc_max,
+        AVG(usoc_avg) as usoc_avg
         <if test="filter != null and filter != ''">
             <choose>
                 <when test="filter == 'HOUR'">
@@ -189,5 +189,18 @@
         </if>
         ORDER BY create_at DESC
         LIMIT 100
+    </select>
+
+    <select id="findStatusCount" resultType="BatteryPackStatus">
+        SELECT
+        cell_voltage_dv,
+        SUM(CASE WHEN status = 'OK' THEN 1 ELSE 0 END) AS ok_count,
+        SUM(CASE WHEN status = 'NG' THEN 1 ELSE 0 END) AS ng_count
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.battery_pack b ON u.factory_id = b.factory_id
+        WHERE u.factory_id = #{factoryId}
+        <if test="startAt != null and endAt != null">
+            AND (create_at BETWEEN #{startAt} AND #{endAt})
+        </if>
     </select>
 </mapper>

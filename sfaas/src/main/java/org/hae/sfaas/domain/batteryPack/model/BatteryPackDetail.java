@@ -24,6 +24,7 @@ public class BatteryPackDetail {
     private Double cellTempMin;
     private Double cellTempAvg;
     private Status status;
+    private String factoryCode;
+    private String factoryLocation;
     private LocalDateTime createAt;
-    private String filterGroup;
 }

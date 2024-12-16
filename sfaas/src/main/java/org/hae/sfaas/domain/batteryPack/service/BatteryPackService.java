@@ -6,6 +6,7 @@ import org.hae.sfaas.domain.batteryPack.mapper.BatteryPackMapper;
 import org.hae.sfaas.domain.batteryPack.model.*;
 import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
+import org.hae.sfaas.domain.welder.model.Status;
 import org.hae.sfaas.global.common.exception.SFaaSException;
 import org.hae.sfaas.global.common.response.ErrorType;
 import org.springframework.stereotype.Service;
@@ -90,7 +91,7 @@ public class BatteryPackService {
                 .toList();
     }
 
-    public List<BatteryFilterGroupResponse> getDetailInfo(Long userId, LocalDate startAt, LocalDate endAt, String filter){
+    public List<BatteryPackDetailResponse> getDetailInfo(Long userId, LocalDate startAt, LocalDate endAt, Status status){
         User user = userMapper.findById(userId);
 
         if(user == null){
@@ -99,17 +100,8 @@ public class BatteryPackService {
 
         Long factory_id = user.getFactoryId();
 
-        List<BatteryPackDetail> detailInfos = batteryPackMapper.findDetailInfos(userId, startAt, endAt, filter);
+        List<BatteryPackDetail> detailInfos = batteryPackMapper.findDetailInfos(userId, startAt, endAt, status);
 
-        return detailInfos.stream()
-                .collect(Collectors.groupingBy(
-                        BatteryPackDetail::getFilterGroup,
-                        LinkedHashMap::new,
-                        Collectors.mapping(BatteryPackDetailResponse::of,Collectors.toList())
-                ))
-                .entrySet()
-                .stream()
-                .map(entry-> new BatteryFilterGroupResponse(entry.getKey(),entry.getValue()))
-                .toList();
+        return detailInfos.stream().map(BatteryPackDetailResponse::of).toList();
     }
 }

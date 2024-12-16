@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 @Data
 public class BatteryPack {
     private Long batteryPackId;
-    private Long factoryId;
+    private Long factoryCode;
+    private String location;
     private Double rsocMin;
     private Double rsocMax;
     private Double rsocAvg;

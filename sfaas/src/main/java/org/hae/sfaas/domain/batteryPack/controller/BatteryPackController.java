@@ -2,6 +2,7 @@ package org.hae.sfaas.domain.batteryPack.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.hae.sfaas.domain.batteryPack.service.BatteryPackService;
+import org.hae.sfaas.domain.welder.model.Status;
 import org.hae.sfaas.global.common.response.SFaaSResponse;
 import org.hae.sfaas.global.common.response.SuccessType;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -45,8 +46,8 @@ public class BatteryPackController {
     public ResponseEntity<SFaaSResponse<?>> getDetailInfos(@RequestHeader("userId") Long userId,
                                                            @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                            @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
-                                                           @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter){
-        return  ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_DETAIL_SUCCESS, batteryPackService.getDetailInfo(userId, startAt, endAt, filter)));
+                                                           @RequestParam(value = "status", required = false) Status status){
+        return  ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_DETAIL_SUCCESS, batteryPackService.getDetailInfo(userId, startAt, endAt,status)));
     }
 
 //    @GetMapping("/batterypack/status")
@@ -55,6 +56,6 @@ public class BatteryPackController {
 //                                                      @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
 //                                                      @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter){
 //
-//        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_STATUS_SUCCESS,))
+//        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_STATUS_SUCCESS,batteryPackService.getStatus()));
 //    }
 }

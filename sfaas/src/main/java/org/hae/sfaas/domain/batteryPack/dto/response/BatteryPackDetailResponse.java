@@ -23,28 +23,32 @@ public record BatteryPackDetailResponse (
         Double cellTempMin,
         Double cellTempAvg,
         Status status,
+        String factoryCode,
+        String factoryLocation,
         LocalDateTime createAt
 ){
     public static BatteryPackDetailResponse of(BatteryPackDetail batteryPackDetail){
         return new BatteryPackDetailResponse(
-          batteryPackDetail.getRsocMin(),
-          batteryPackDetail.getRsocMax(),
-          batteryPackDetail.getRsocAvg(),
-          batteryPackDetail.getUsocMin(),
-          batteryPackDetail.getUsocMax(),
-          batteryPackDetail.getUsocAvg(),
-          batteryPackDetail.getChgPmax(),
-          batteryPackDetail.getDchgPmax(),
-          batteryPackDetail.getChgImax(),
-          batteryPackDetail.getDchgImax(),
-          batteryPackDetail.getCellVoltageMin(),
-          batteryPackDetail.getCellVoltageMax(),
-          batteryPackDetail.getCellVoltageDv(),
-          batteryPackDetail.getCellTempMax(),
-          batteryPackDetail.getCellTempMin(),
-          batteryPackDetail.getCellTempAvg(),
-          batteryPackDetail.getStatus(),
-          batteryPackDetail.getCreateAt()
+              batteryPackDetail.getRsocMin(),
+              batteryPackDetail.getRsocMax(),
+              batteryPackDetail.getRsocAvg(),
+              batteryPackDetail.getUsocMin(),
+              batteryPackDetail.getUsocMax(),
+              batteryPackDetail.getUsocAvg(),
+              batteryPackDetail.getChgPmax(),
+              batteryPackDetail.getDchgPmax(),
+              batteryPackDetail.getChgImax(),
+              batteryPackDetail.getDchgImax(),
+              batteryPackDetail.getCellVoltageMin(),
+              batteryPackDetail.getCellVoltageMax(),
+              batteryPackDetail.getCellVoltageDv(),
+              batteryPackDetail.getCellTempMax(),
+              batteryPackDetail.getCellTempMin(),
+              batteryPackDetail.getCellTempAvg(),
+              batteryPackDetail.getStatus(),
+                batteryPackDetail.getFactoryCode(),
+                batteryPackDetail.getFactoryLocation(),
+              batteryPackDetail.getCreateAt()
         );
     }
 }

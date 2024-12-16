@@ -17,12 +17,17 @@
         SELECT
             u.factory_id,
             COUNT(*) AS totalCount,
-            DATE_FORMAT(create_at, '%Y-%m-%d %H:00:00') AS filterGroup
+            CONCAT(
+                    DATE_FORMAT(b.create_at, '%Y-%m-%d '),LPAD(FLOOR(HOUR(b.create_at) / 2) * 2, 2, '0'),':00:00'
+            ) AS filterGroup
         FROM ${sfaas.db.schema}.user u
         JOIN ${sfaas.db.schema}.battery b ON u.factory_id = b.factory_id
         WHERE u.factory_id = #{factoryId}
-          AND create_at >= NOW() - INTERVAL 3 HOUR
+        <![CDATA[
+                  AND b.create_at >= '2022-06-07'
+                  AND b.create_at <= '2022-06-08 01:00:00'
+        ]]>
         GROUP BY u.factory_id, filterGroup
-        ORDER BY filterGroup ASC
+        ORDER BY filterGroup ASC;
     </select>
 </mapper>

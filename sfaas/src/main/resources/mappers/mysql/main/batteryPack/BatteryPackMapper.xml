@@ -212,7 +212,7 @@
                 </otherwise>
             </choose>
         </if>
-        ROUND(AVG(cell_voltage_dv), 2) AS cell_voltage_dv,
+        ROUND(AVG(cell_voltage_dv),3) AS cell_voltage_dv,
         SUM(CASE WHEN status = 'OK' THEN 1 ELSE 0 END) AS ok_count,
         SUM(CASE WHEN status = 'NG' THEN 1 ELSE 0 END) AS ng_count
         FROM ${sfaas.db.schema}.user u

@@ -1,8 +1,10 @@
 package org.hae.sfaas.domain.welder.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hae.sfaas.domain.battery.model.BatteryStatus;
 import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
+import org.hae.sfaas.domain.user.model.UserRole;
 import org.hae.sfaas.domain.welder.dto.response.*;
 import org.hae.sfaas.domain.welder.mapper.WelderMapper;
 import org.hae.sfaas.domain.welder.model.*;
@@ -24,14 +26,20 @@ public class WelderService {
     private final UserMapper userMapper;
     private final WelderMapper welderMapper;
 
-    public List<WelderFilterGroupResponse> getSpeedInfo(Long userId, LocalDate startAt, LocalDate endAt, String filter) {
+    public List<WelderFilterGroupResponse> getSpeedInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt, String filter) {
         User user = userMapper.findById(userId);
         if (user == null) {
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        Long factoryId = user.getFactoryId();
-        List<WelderGateTime> welders = welderMapper.findGateTimeAVGBySpeed(factoryId, startAt, endAt, filter);
+        Long fId = null;
+        if (user.getUserRole().equals(UserRole.ADMIN)) {
+            fId = factoryId;
+        } else {
+            fId = user.getFactoryId();
+        }
+
+        List<WelderGateTime> welders = welderMapper.findGateTimeAVGBySpeed(fId, startAt, endAt, filter);
 
         Map<String, List<WeldGateTimeInfoResponse>> chartDataMap = new LinkedHashMap<>();
 
@@ -71,29 +79,39 @@ public class WelderService {
         return responseList;
     }
 
-    public List<WelderDetailInfoResponse> getWeldersInfo(Long userId, LocalDate startAt, LocalDate endAt, Status status) {
+    public List<WelderDetailInfoResponse> getWeldersInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt, Status status) {
         User user = userMapper.findById(userId);
         //TODO - userValidator 재사용 하기
         if(user == null) {
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        // TODO - user가 ADMIN인 경우 전체 factory_id 없이 조회 ? -> 구조 고민 !!
+        Long fId = null;
+        if (user.getUserRole().equals(UserRole.ADMIN)) {
+            fId = factoryId;
+        } else {
+            fId = user.getFactoryId();
+        }
 
-        Long factoryId = user.getFactoryId();
-        List<DetailWelder> welders = welderMapper.findAllByfactoryId(factoryId, startAt, endAt, status);
+        List<DetailWelder> welders = welderMapper.findAllByfactoryId(fId, startAt, endAt, status);
 
         return welders.stream().map(WelderDetailInfoResponse::of).toList();
     }
 
-    public List<WelderFilterGroupResponse> getStatusInfo(Long userId, LocalDate startAt, LocalDate endAt) {
+    public List<WelderFilterGroupResponse> getStatusInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt) {
         User user = userMapper.findById(userId);
         if (user == null) {
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        Long factoryId = user.getFactoryId();
-        List<WelderStatus> welders = welderMapper.findStatusCount(factoryId, startAt, endAt);
+        Long fId = null;
+        if (user.getUserRole().equals(UserRole.ADMIN)) {
+            fId = factoryId;
+        } else {
+            fId = user.getFactoryId();
+        }
+
+        List<WelderStatus> welders = welderMapper.findStatusCount(fId, startAt, endAt);
 
         Map<String, Map<String, int[]>> chartDataMap = new LinkedHashMap<>();
 
@@ -129,14 +147,20 @@ public class WelderService {
         return responseList;
     }
 
-    public List<WelderFilterGroupResponse> getPowerInfo(Long userId, LocalDate startAt, LocalDate endAt, String filter) {
+    public List<WelderFilterGroupResponse> getPowerInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt, String filter) {
         User user = userMapper.findById(userId);
         if (user == null) {
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
 
-        Long factoryId = user.getFactoryId();
-        List<WelderPower> welders = welderMapper.findPower(factoryId, startAt, endAt, filter);
+        Long fId = null;
+        if (user.getUserRole().equals(UserRole.ADMIN)) {
+            fId = factoryId;
+        } else {
+            fId = user.getFactoryId();
+        }
+
+        List<WelderPower> welders = welderMapper.findPower(fId, startAt, endAt, filter);
 
         Map<String, List<WelderPowerInfoResponse>> chartDataMap = new LinkedHashMap<>();
 

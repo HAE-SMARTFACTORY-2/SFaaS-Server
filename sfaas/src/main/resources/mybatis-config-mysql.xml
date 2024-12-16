@@ -19,6 +19,7 @@
         <package name="org.hae.sfaas.domain.welder.model"/>
 <!--        <package name="org.hae.sfaas.domain.aging.model"/>-->
         <package name="org.hae.sfaas.domain.batteryPack.model"/>
+        <package name="org.hae.sfaas.domain.battery.model"/>
     </typeAliases>
 
     <mappers>
@@ -27,6 +28,7 @@
         <mapper resource="mappers/mysql/main/welder/WelderMapper.xml" />
 <!--        <mapper resource="mappers/mysql/main/aging/AgingMapper.xml" />-->
         <mapper resource="mappers/mysql/main/batteryPack/BatteryPackMapper.xml" />
+        <mapper resource="mappers/mysql/main/battery/BatteryMapper.xml" />
     </mappers>
 
 </configuration>

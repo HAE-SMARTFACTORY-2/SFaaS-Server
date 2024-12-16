@@ -29,7 +29,7 @@ public class BatteryService {
         }
 
         BatteryStatus batteryStatus = null;
-        if (user.getUserRole().equals(UserRole.ADMIN)) {
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
             batteryStatus = batteryMapper.findStatusCountbyfId(userId, factoryId);
         } else {
             batteryStatus = batteryMapper.findStatusCountbyfId(userId, user.getFactoryId());

@@ -33,7 +33,7 @@ public class WelderService {
         }
 
         Long fId = null;
-        if (user.getUserRole().equals(UserRole.ADMIN)) {
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
             fId = factoryId;
         } else {
             fId = user.getFactoryId();
@@ -87,7 +87,7 @@ public class WelderService {
         }
 
         Long fId = null;
-        if (user.getUserRole().equals(UserRole.ADMIN)) {
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
             fId = factoryId;
         } else {
             fId = user.getFactoryId();
@@ -105,7 +105,7 @@ public class WelderService {
         }
 
         Long fId = null;
-        if (user.getUserRole().equals(UserRole.ADMIN)) {
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
             fId = factoryId;
         } else {
             fId = user.getFactoryId();
@@ -154,7 +154,7 @@ public class WelderService {
         }
 
         Long fId = null;
-        if (user.getUserRole().equals(UserRole.ADMIN)) {
+        if (user.getUserRole().equals(UserRole.ADMIN) && factoryId != null) {
             fId = factoryId;
         } else {
             fId = user.getFactoryId();

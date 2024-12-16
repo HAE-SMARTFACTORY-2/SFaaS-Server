@@ -13,7 +13,7 @@ public record BatteryPackStatusResponse(
                 batteryPackStatus.getOkCount(),
                 batteryPackStatus.getNgCount(),
                 batteryPackStatus.getOkCount() + batteryPackStatus.getNgCount(),
-                (batteryPackStatus.getCellVoltageDv()*1000)
+                (batteryPackStatus.getCellVoltageDv())
         );
     }
 }

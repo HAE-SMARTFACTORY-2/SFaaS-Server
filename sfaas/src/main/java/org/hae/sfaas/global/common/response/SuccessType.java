@@ -27,7 +27,8 @@ public enum SuccessType {
     GET_BATTERYPACK_SOC_SUCCESS(HttpStatus.OK,2011,"배터리팩 SoC 전압 데이터 조회에 성공하였습니다."),
     GET_BATTERYPACK_DETAIL_SUCCESS(HttpStatus.OK,2012,"배터리팩 상세 데이터 조회에 성공하였습니다"),
     GET_BATTERYPACK_STATUS_SUCCESS(HttpStatus.OK,2013,"배터리팩 불량품/양품 데이터 조회에 성공하였습니다"),
-    GET_BATTERY_STATUS_SUCCESS(HttpStatus.OK, 2014, "배터리 불량품/양품 데이터 조회에 성공하였습니다");
+    GET_BATTERY_STATUS_SUCCESS(HttpStatus.OK, 2014, "배터리 불량품/양품 데이터 조회에 성공하였습니다"),
+    GET_BATTERY_OUTPUT_SUCCESS(HttpStatus.OK, 2015, "배터리 시간별 생산량/목표수량 조회에 성공하였습니다");
 
     /**
      * 201 CREATED (2100 ~ 2199)

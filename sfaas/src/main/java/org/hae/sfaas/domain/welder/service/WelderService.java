@@ -1,7 +1,6 @@
 package org.hae.sfaas.domain.welder.service;
 
 import lombok.RequiredArgsConstructor;
-import org.hae.sfaas.domain.battery.model.BatteryStatus;
 import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
 import org.hae.sfaas.domain.user.model.UserRole;

@@ -20,8 +20,12 @@ public enum SuccessType {
     GET_WELDER_GATETIME_SUCCESS(HttpStatus.OK, 2005, "용접 길이에 따른 가동시간 추이 그래프 조회에 성공하였습니다" ),
     GET_WELDER_DETAIL_SUCCESS(HttpStatus.OK, 2006, "용접 설비 데이터 조회에 성공하였습니다"),
     GET_WELDER_STATUS_SUCCESS(HttpStatus.OK, 2007, "용접 설비 불량률 조회에 성공하였습니다"),
-    GET_WELDER_POWER_SUCCESS(HttpStatus.OK, 2008, "용접 설비 출력값 조회에 성공하였습니다");
-
+    GET_WELDER_POWER_SUCCESS(HttpStatus.OK, 2008, "용접 설비 출력값 조회에 성공하였습니다"),
+    GET_BATTERYPACK_VOLTAGE_SUCCESS(HttpStatus.OK,2009,"배터리팩 전압 데이터 조회에 성공하였습니다"),
+    GET_BATTERYPACK_TEMPERATURE_SUCCESS(HttpStatus.OK,2010,"배터리팩 온도 데이터 조회에 성공하였습니다"),
+    GET_BATTERYPACK_SOC_SUCCESS(HttpStatus.OK,2011,"배터리팩 SoC 전압 데이터 조회에 성공하였습니다."),
+    GET_BATTERYPACK_DETAIL_SUCCESS(HttpStatus.OK,2012,"배터리팩 상세 데이터 조회에 성공하였습니다"),
+    GET_BATTERYPACK_STATUS_SUCCESS(HttpStatus.OK,2013,"배터리팩 불량품/양품 데이터 조회에 성공하였습니다");
     /**
      * 201 CREATED (2100 ~ 2199)
      */

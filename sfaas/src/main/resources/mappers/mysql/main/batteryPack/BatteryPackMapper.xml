@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.hae.sfaas.domain.batteryPack.mapper.BatteryPackMapper">
+    <select id="findVoltageInfos" resultType="BatteryPackVoltageInfo">
+        SELECT
+        cell_voltage_min,
+        cell_voltage_max,
+        cell_voltage_dv
+        <if test="filter != null and filter != ''">
+            <choose>
+                <when test="filter == 'HOUR'">
+                    ,DATE_FORMAT(create_at, '%Y-%m-%d %H:00:00') AS filter_group
+                </when>
+                <when test="filter == 'DATE'">
+                    ,DATE(create_at) AS filter_group
+                </when>
+                <when test="filter == 'WEEK'">
+                    ,DATE_FORMAT(create_at, '%Y%V') AS filter_group
+                </when>
+                <when test="filter == 'MONTH'">
+                    ,DATE_FORMAT(create_at, '%Y-%m') AS filter_group
+                </when>
+                <otherwise>
+                    ,NULL AS filter_group
+                </otherwise>
+            </choose>
+        </if>
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.battery_pack b ON u.factory_id = b.factory_id
+        WHERE u.factory_id = #{factoryId}
+        <if test="startAt != null and endAt != null">
+            AND (create_at BETWEEN #{startAt} AND #{endAt})
+        </if>
+        <if test="filter != null and filter != ''">
+            <choose>
+                <when test="filter == 'HOUR'">
+                    GROUP BY DATE_FORMAT(create_at, '%Y-%m-%d %H:00:00')
+                </when>
+                <when test="filter == 'DATE'">
+                    GROUP BY DATE(create_at)
+                </when>
+                <when test="filter == 'WEEK'">
+                    GROUP BY DATE_FORMAT(create_at, '%Y%V')
+                </when>
+                <when test="filter == 'MONTH'">
+                    GROUP BY DATE_FORMAT(create_at, '%Y-%m')
+                </when>
+            </choose>
+        </if>
+        ORDER BY filter_group IS NULL, filter_group ASC
+        LIMIT 100
+    </select>
+
+    <select id="findTempInfos" resultType="BatteryPackTempInfo">
+        SELECT
+        cell_temp_min,
+        cell_temp_max,
+        cell_temp_avg
+        <if test="filter != null and filter != ''">
+            <choose>
+                <when test="filter == 'HOUR'">
+                    ,DATE_FORMAT(create_at, '%Y-%m-%d %H:00:00') AS filter_group
+                </when>
+                <when test="filter == 'DATE'">
+                    ,DATE(create_at) AS filter_group
+                </when>
+                <when test="filter == 'WEEK'">
+                    ,DATE_FORMAT(create_at, '%Y%V') AS filter_group
+                </when>
+                <when test="filter == 'MONTH'">
+                    ,DATE_FORMAT(create_at, '%Y-%m') AS filter_group
+                </when>
+                <otherwise>
+                    ,NULL AS filter_group
+                </otherwise>
+            </choose>
+        </if>
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.battery_pack b ON u.factory_id = b.factory_id
+        WHERE u.factory_id = #{factoryId}
+        <if test="startAt != null and endAt != null">
+            AND (create_at BETWEEN #{startAt} AND #{endAt})
+        </if>
+        <if test="filter != null and filter != ''">
+            <choose>
+                <when test="filter == 'HOUR'">
+                    GROUP BY DATE_FORMAT(create_at, '%Y-%m-%d %H:00:00')
+                </when>
+                <when test="filter == 'DATE'">
+                    GROUP BY DATE(create_at)
+                </when>
+                <when test="filter == 'WEEK'">
+                    GROUP BY DATE_FORMAT(create_at, '%Y%V')
+                </when>
+                <when test="filter == 'MONTH'">
+                    GROUP BY DATE_FORMAT(create_at, '%Y-%m')
+                </when>
+            </choose>
+        </if>
+        ORDER BY filter_group IS NULL, filter_group ASC
+        LIMIT 100
+    </select>
+
+    <select id="findSocInfos" resultType="BatteryPackSocInfo">
+        SELECT
+        rsoc_min,
+        rsoc_max,
+        rsoc_avg,
+        usoc_min,
+        usoc_max,
+        usoc_avg
+        <if test="filter != null and filter != ''">
+            <choose>
+                <when test="filter == 'HOUR'">
+                    ,DATE_FORMAT(create_at, '%Y-%m-%d %H:00:00') AS filter_group
+                </when>
+                <when test="filter == 'DATE'">
+                    ,DATE(create_at) AS filter_group
+                </when>
+                <when test="filter == 'WEEK'">
+                    ,DATE_FORMAT(create_at, '%Y%V') AS filter_group
+                </when>
+                <when test="filter == 'MONTH'">
+                    ,DATE_FORMAT(create_at, '%Y-%m') AS filter_group
+                </when>
+                <otherwise>
+                    ,NULL AS filter_group
+                </otherwise>
+            </choose>
+        </if>
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.battery_pack b ON u.factory_id = b.factory_id
+        WHERE u.factory_id = #{factoryId}
+        <if test="startAt != null and endAt != null">
+            AND (create_at BETWEEN #{startAt} AND #{endAt})
+        </if>
+        <if test="filter != null and filter != ''">
+            <choose>
+                <when test="filter == 'HOUR'">
+                    GROUP BY DATE_FORMAT(create_at, '%Y-%m-%d %H:00:00')
+                </when>
+                <when test="filter == 'DATE'">
+                    GROUP BY DATE(create_at)
+                </when>
+                <when test="filter == 'WEEK'">
+                    GROUP BY DATE_FORMAT(create_at, '%Y%V')
+                </when>
+                <when test="filter == 'MONTH'">
+                    GROUP BY DATE_FORMAT(create_at, '%Y-%m')
+                </when>
+            </choose>
+        </if>
+        ORDER BY filter_group IS NULL, filter_group ASC
+        LIMIT 100
+    </select>
+
+    <select id="findDetailInfos" resultType="BatteryPackDetail">
+        SELECT
+        rsoc_min,
+        rsoc_max,
+        rsoc_avg,
+        usoc_min,
+        usoc_max,
+        usoc_avg,
+        chg_pmax,
+        dchg_pmax,
+        chg_imax,
+        dchg_imax,
+        cell_voltage_min,
+        cell_voltage_max,
+        cell_voltage_dv,
+        cell_temp_min,
+        cell_temp_max,
+        cell_temp_avg,
+        status,
+        create_at,
+        f.factory_code,
+        f.factory_location
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.battery_pack b ON u.factory_id = b.factory_id
+        JOIN ${sfaas.db.schema}.factory f ON u.factory_id = f.factory_id
+        WHERE u.factory_id = #{factoryId}
+        <if test="startAt != null and endAt != null">
+            AND (create_at BETWEEN #{startAt} AND #{endAt})
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        ORDER BY create_at DESC
+        LIMIT 100
+    </select>
+</mapper>

@@ -5,10 +5,6 @@ spring:
     username: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD}
 
-  mybatis:
-    config-location: classpath:mybatis-config-mysql.xml
-    mapper-locations: classpath:mappers/mysql/main/*/*.xml
-
   sql:
     init:
       mode: never
@@ -18,7 +14,6 @@ spring:
     activate:
       on-profile: local
 
-  data:
-    redis:
-      host: localhost
-      port: 6379
+  mybatis:
+    config-location: classpath:mybatis-config-mysql.xml
+    mapper-locations: classpath:mappers/mysql/main/*/*.xml

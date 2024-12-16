@@ -13,9 +13,8 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
 
-@SpringBootApplication
 @Configuration
-@MapperScan("org.hae.sfaas.domain.**.**.mapper")
+@MapperScan(basePackages = "org.hae.sfaas.domain")
 public class MapperSessionFactory {
 
     @Value("${spring.mybatis.config-location}")

@@ -13,12 +13,11 @@ import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/batteryPack")
 public class BatteryPackController {
 
     private final BatteryPackService batteryPackService;
 
-    @GetMapping("/getVoltageInfo")
+    @GetMapping("/batterypack/voltage")
     public ResponseEntity<SFaaSResponse<?>> getVoltageInfos(@RequestHeader("userId") Long userId,
                                                             @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                             @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
@@ -26,7 +25,7 @@ public class BatteryPackController {
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_VOLTAGE_SUCCESS, batteryPackService.getVoltageInfo(userId, startAt, endAt, filter)));
     }
 
-    @GetMapping("/getTempInfo")
+    @GetMapping("/batterypack/temperature")
     public ResponseEntity<SFaaSResponse<?>> getTempInfos(@RequestHeader("userId") Long userId,
                                                          @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                          @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
@@ -34,7 +33,7 @@ public class BatteryPackController {
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_TEMPERATURE_SUCCESS, batteryPackService.getTempInfo(userId,startAt,endAt,filter)));
     }
 
-    @GetMapping("/getSoCInfo")
+    @GetMapping("/batterypack/socvoltage")
     public ResponseEntity<SFaaSResponse<?>> getSocInfos(@RequestHeader("userId") Long userId,
                                                         @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                         @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
@@ -42,11 +41,13 @@ public class BatteryPackController {
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_SOC_SUCCESS, batteryPackService.getSocInfo(userId,startAt,endAt,filter)));
     }
 
-    @GetMapping("/getDetail")
+    @GetMapping("/batterypacks")
     public ResponseEntity<SFaaSResponse<?>> getDetailInfos(@RequestHeader("userId") Long userId,
                                                            @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                            @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
                                                            @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter){
         return  ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_DETAIL_SUCCESS, batteryPackService.getDetailInfo(userId, startAt, endAt, filter)));
     }
+
+    @Get
 }

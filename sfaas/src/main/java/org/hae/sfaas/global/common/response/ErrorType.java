@@ -17,7 +17,8 @@ public enum ErrorType {
     INVALID_TYPE(HttpStatus.BAD_REQUEST, 4002, "잘못된 타입이 입력되었습니다."),
     INVALID_MISSING_HEADER(HttpStatus.BAD_REQUEST, 4003, "요청에 필요한 헤더값이 존재하지 않습니다."),
     INVALID_HTTP_REQUEST(HttpStatus.BAD_REQUEST, 4004, "허용되지 않는 문자열이 입력되었습니다."),
-    INVALID_BOARD_REQUEST(HttpStatus.BAD_REQUEST, 4005, "존재하지 않는 게시글 입니다."),
+    INVALID_BOARD_DELETE_REQUEST(HttpStatus.BAD_REQUEST, 4005, "존재하지 않는 게시글 삭제 요청 입니다."),
+    INVALID_BOARD_CREATE_REQUEST(HttpStatus.BAD_REQUEST, 4006, "게시글 생성에 실패했습니다."),
     /**
      * 401 UNAUTHROZIED (4100 ~ 4199)
      */

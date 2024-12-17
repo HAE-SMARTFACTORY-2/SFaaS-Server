@@ -38,7 +38,7 @@ public class BoardService {
         Board board = new Board(userId,boardRegisterDTO);
 
         if(boardMapper.createBoard(board) < 1){
-            throw new SFaaSException(ErrorType.INVALID_BOARD_REQUEST);
+            throw new SFaaSException(ErrorType.INVALID_BOARD_CREATE_REQUEST);
         }
     }
 
@@ -76,7 +76,7 @@ public class BoardService {
         }
 
         if(boardMapper.deleteBoard(boardId) < 1){
-            throw new SFaaSException(ErrorType.INTERNAL_SERVER);
+            throw new SFaaSException(ErrorType.INVALID_BOARD_DELETE_REQUEST);
         }
     }
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.hae.sfaas.domain.board.mapper.BoardMapper">
+    <insert id="createBoard" parameterType="Board" useGeneratedKeys="true"  keyProperty="boardId" keyColumn="board_id">
+        INSERT board(user_id,title,content,create_at)
+        VALUES(
+            #{userId},
+            #{title},
+            #{content},
+            #{createAt}
+        )
+    </insert>
+
+    <select id="getBoardInfo" parameterType="Long">
+        SELECT
+        board_id,
+        u.user_name,
+        title,
+        create_at
+        FROM ${sfaas.db.schema}.user u
+        JOIN ${sfaas.db.schema}.board b ON u.user_id = b.user_id
+        WHERE u.factory_id = #{factoryId}
+    </select>
+
+    <select id="getBoardDetail" parameterType="Long">
+        SELECT
+        u.user_name,
+        title,
+        content,
+        create_at
+        FROM ${sfaas.db.schema}.board b
+        JOIN ${sfaas.db.schema}.user u ON u.user_id = b.user_id
+        WHERE b.board_id = #{boardId}
+    </select>
+
+    <delete id="deleteBoard">
+        DELETE
+        FROM ${sfaas.db.schema}.board
+        WHERE board_id = #{boardId}
+    </delete>
+</mapper>

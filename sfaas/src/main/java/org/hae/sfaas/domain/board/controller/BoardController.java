@@ -1,7 +1,7 @@
 package org.hae.sfaas.domain.board.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.hae.sfaas.domain.board.model.BoardRegister;
+import org.hae.sfaas.domain.board.dto.request.BoardRegisterDTO;
 import org.hae.sfaas.domain.board.service.BoardService;
 import org.hae.sfaas.global.common.response.SFaaSResponse;
 import org.hae.sfaas.global.common.response.SuccessType;
@@ -16,9 +16,9 @@ public class BoardController {
 
     @PostMapping("/board")
     public ResponseEntity<SFaaSResponse<?>> createBoard(@RequestHeader("userId") Long userId,
-                                                        @RequestBody BoardRegister boardRegister){
-        boardService.createBoard(userId,boardRegister);
-        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.POST_BOARD_CREATE_SUCCESS));
+                                                        @RequestBody BoardRegisterDTO boardRegisterDTO){
+        boardService.createBoard(userId,boardRegisterDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(SFaaSResponse.success(SuccessType.POST_BOARD_CREATE_SUCCESS));
     }
 
     @GetMapping("/board")

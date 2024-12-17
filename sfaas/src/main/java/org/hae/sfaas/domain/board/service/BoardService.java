@@ -1,13 +1,12 @@
 package org.hae.sfaas.domain.board.service;
 
 import lombok.RequiredArgsConstructor;
-import org.hae.sfaas.domain.board.dto.response.BoardGroupResponse;
+import org.hae.sfaas.domain.board.dto.request.BoardRegisterDTO;
 import org.hae.sfaas.domain.board.dto.response.BoardInfoResponse;
 import org.hae.sfaas.domain.board.mapper.BoardMapper;
 import org.hae.sfaas.domain.board.model.Board;
 import org.hae.sfaas.domain.board.model.BoardDetail;
 import org.hae.sfaas.domain.board.model.BoardInfo;
-import org.hae.sfaas.domain.board.model.BoardRegister;
 import org.hae.sfaas.domain.user.mapper.UserMapper;
 import org.hae.sfaas.domain.user.model.User;
 import org.hae.sfaas.domain.user.model.UserRole;
@@ -17,26 +16,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardMapper boardMapper;
     private final UserMapper userMapper;
 
-    public void createBoard(Long userId, BoardRegister boardRegister){
+    @Transactional
+    public void createBoard(Long userId, BoardRegisterDTO boardRegisterDTO){
         User user = userMapper.findById(userId);
 
         if(user == null){
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
-        }else if(!Objects.equals(user.getUserRole().getRole(), UserRole.ADMIN.getRole())
-                && !Objects.equals(user.getUserRole().getRole(), UserRole.MANAGER.getRole())){
+        }else if(!user.getUserRole().getRole().equals(UserRole.ADMIN.getRole())
+                && !user.getUserRole().getRole().equals(UserRole.MANAGER.getRole())){
             throw new SFaaSException(ErrorType.FORBIDDEN_USER);
         }
 
-        Board board = new Board(userId,boardRegister);
+        Board board = new Board(userId,boardRegisterDTO);
 
         if(boardMapper.createBoard(board) < 1){
             throw new SFaaSException(ErrorType.INTERNAL_SERVER);
@@ -65,16 +64,19 @@ public class BoardService {
         return boardMapper.getBoardDetail(boardId);
     }
 
+    @Transactional
     public void deleteBoard(Long userId,Long boardId){
         User user = userMapper.findById(userId);
 
         if(user == null){
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
-        }else if(!Objects.equals(user.getUserRole().getRole(), UserRole.ADMIN.getRole())
-                && !Objects.equals(user.getUserRole().getRole(), UserRole.MANAGER.getRole())){
+        }else if(!user.getUserRole().getRole().equals(UserRole.ADMIN.getRole())
+                && !user.getUserRole().getRole().equals(UserRole.MANAGER.getRole())){
             throw new SFaaSException(ErrorType.FORBIDDEN_USER);
         }
 
-        boardMapper.deleteBoard(boardId);
+        if(boardMapper.deleteBoard(boardId) < 1){
+            throw new SFaaSException(ErrorType.INTERNAL_SERVER);
+        }
     }
 }

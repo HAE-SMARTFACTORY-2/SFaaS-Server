@@ -10,5 +10,5 @@ public interface BoardMapper {
     int createBoard(Board board);
     List<BoardInfo> getBoardInfo(Long factoryId);
     BoardDetail getBoardDetail(Long boardId);
-    void deleteBoard(Long boardId);
+    int deleteBoard(Long boardId);
 }

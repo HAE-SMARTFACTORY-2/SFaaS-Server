@@ -1,6 +1,7 @@
 package org.hae.sfaas.domain.board.model;
 
 import lombok.Data;
+import org.hae.sfaas.domain.board.dto.request.BoardRegisterDTO;
 
 import java.time.LocalDateTime;
 
@@ -12,10 +13,10 @@ public class Board {
     private String content;
     private LocalDateTime createAt;
 
-    public Board(Long userId, BoardRegister boardRegister){
+    public Board(Long userId, BoardRegisterDTO boardRegisterDTO){
         this.userId = userId;
-        this.title = boardRegister.getTitle();
-        this.content = boardRegister.getContent();
+        this.title = boardRegisterDTO.title();
+        this.content = boardRegisterDTO.content();
         this.createAt = LocalDateTime.now().minusYears(2);
     }
 }

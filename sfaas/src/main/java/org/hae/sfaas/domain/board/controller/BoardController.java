@@ -28,7 +28,8 @@ public class BoardController {
     }
 
     @GetMapping("/board/{boardId}")
-    public ResponseEntity<SFaaSResponse<?>> getBoardId(@PathVariable Long boardId){
+    public ResponseEntity<SFaaSResponse<?>> getBoardId(@RequestHeader("userId") Long userId,
+                                                       @PathVariable Long boardId){
         return ResponseEntity.status(HttpStatus.OK).body((SFaaSResponse.success(SuccessType.GET_BOARD_DETAIL_SUCCESS,boardService.getBoardDetail(boardId))));
     }
 

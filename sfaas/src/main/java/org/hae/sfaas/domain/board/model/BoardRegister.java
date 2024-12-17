@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class BoardRegister {
     private Long factoryId;
-    private Long userId;
     private String title;
     private String content;
 }

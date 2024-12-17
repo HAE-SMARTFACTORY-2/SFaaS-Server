@@ -56,7 +56,7 @@ public class BoardService {
             fId = user.getFactoryId();
         }
 
-        List<BoardInfo> boardInfos = boardMapper.getBoardInfo(factoryId);
+        List<BoardInfo> boardInfos = boardMapper.getBoardInfo(fId);
         return boardInfos.stream().map(BoardInfoResponse::of).toList();
     }
 

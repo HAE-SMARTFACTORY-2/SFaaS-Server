@@ -47,7 +47,6 @@
             </choose>
         </if>
         ORDER BY filter_group IS NULL, filter_group ASC
-        LIMIT 100
     </select>
 
     <select id="findStatusCount" resultType="AgingStatus">

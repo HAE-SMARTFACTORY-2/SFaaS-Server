@@ -12,6 +12,6 @@ public interface BatteryPackMapper {
     List<BatteryPackVoltageInfo> findVoltageInfos(Long factoryId, LocalDate startAt, LocalDate endAt, String filter);
     List<BatteryPackTempInfo> findTempInfos(Long factoryId, LocalDate startAt, LocalDate endAt, String filter);
     List<BatteryPackSocInfo> findSocInfos(Long factoryId, LocalDate startAt, LocalDate endAt, String filter);
-    List<BatteryPackDetail> findDetailInfos (Long factoryId, LocalDate startAt, LocalDate endAt, Status status);
+    List<BatteryPackDetail> findDetailInfos (Long factoryId, LocalDate startAt, LocalDate endAt, Long offset, Status status);
     List<BatteryPackStatus> findStatusCount (Long factoryId, LocalDate startAt, LocalDate endAt, String filter);
 }

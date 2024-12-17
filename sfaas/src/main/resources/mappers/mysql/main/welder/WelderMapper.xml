@@ -68,7 +68,7 @@
             AND status = #{status}
         </if>
         ORDER BY create_at DESC
-        LIMIT 100 <!-- 임시 -->
+        LIMIT 100 OFFSET #{offset}
     </select>
 
     <select id="findStatusCount" parameterType="Welder" resultType="WelderStatus">

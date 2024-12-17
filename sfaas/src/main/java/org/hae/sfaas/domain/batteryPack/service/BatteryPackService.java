@@ -106,7 +106,7 @@ public class BatteryPackService {
                 .toList();
     }
 
-    public List<BatteryPackDetailResponse> getDetailInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt, Status status){
+    public List<BatteryPackDetailResponse> getDetailInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt,int pageNum, Status status){
         User user = userMapper.findById(userId);
 
         if(user == null){
@@ -120,7 +120,9 @@ public class BatteryPackService {
             fId = user.getFactoryId();
         }
 
-        List<BatteryPackDetail> detailInfos = batteryPackMapper.findDetailInfos(fId, startAt, endAt, status);
+        Long offset = (long) (pageNum * 100);
+
+        List<BatteryPackDetail> detailInfos = batteryPackMapper.findDetailInfos(fId, startAt, endAt, offset, status);
 
         return detailInfos.stream().map(BatteryPackDetailResponse::of).toList();
     }

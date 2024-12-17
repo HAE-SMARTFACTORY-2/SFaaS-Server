@@ -49,7 +49,6 @@
             </choose>
         </if>
         ORDER BY filter_group IS NULL, filter_group ASC
-        LIMIT 100
     </select>
 
     <select id="findTempInfos" resultType="BatteryPackTempInfo">
@@ -99,7 +98,6 @@
             </choose>
         </if>
         ORDER BY filter_group IS NULL, filter_group ASC
-        LIMIT 100
     </select>
 
     <select id="findSocInfos" resultType="BatteryPackSocInfo">
@@ -152,7 +150,6 @@
             </choose>
         </if>
         ORDER BY filter_group IS NULL, filter_group ASC
-        LIMIT 100
     </select>
 
     <select id="findDetailInfos" resultType="BatteryPackDetail">
@@ -188,7 +185,7 @@
             AND status = #{status}
         </if>
         ORDER BY create_at DESC
-        LIMIT 100
+        LIMIT 100 OFFSET #{offset}
     </select>
 
     <select id="findStatusCount" resultType="BatteryPackStatus">

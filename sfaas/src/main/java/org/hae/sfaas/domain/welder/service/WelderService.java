@@ -78,7 +78,7 @@ public class WelderService {
         return responseList;
     }
 
-    public List<WelderDetailInfoResponse> getWeldersInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt, Status status) {
+    public List<WelderDetailInfoResponse> getWeldersInfo(Long userId, Long factoryId, LocalDate startAt, LocalDate endAt,int pageNum, Status status) {
         User user = userMapper.findById(userId);
         //TODO - userValidator 재사용 하기
         if(user == null) {
@@ -92,7 +92,8 @@ public class WelderService {
             fId = user.getFactoryId();
         }
 
-        List<DetailWelder> welders = welderMapper.findAllByfactoryId(fId, startAt, endAt, status);
+        Long offset = (long)(pageNum*100);
+        List<DetailWelder> welders = welderMapper.findAllByfactoryId(fId, startAt, endAt, offset, status);
 
         return welders.stream().map(WelderDetailInfoResponse::of).toList();
     }

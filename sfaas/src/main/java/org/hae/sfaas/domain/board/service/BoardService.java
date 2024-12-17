@@ -38,7 +38,7 @@ public class BoardService {
         Board board = new Board(userId,boardRegisterDTO);
 
         if(boardMapper.createBoard(board) < 1){
-            throw new SFaaSException(ErrorType.INTERNAL_SERVER);
+            throw new SFaaSException(ErrorType.INVALID_BOARD_REQUEST);
         }
     }
 

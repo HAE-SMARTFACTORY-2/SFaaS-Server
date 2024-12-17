@@ -26,21 +26,21 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<SFaaSResponse<?>> getUserInfos(@RequestParam("userId") Long userId) {
+    public ResponseEntity<SFaaSResponse<?>> getUserInfos(@RequestHeader("userId") Long userId) {
         List<UserDetailInfoResponse> response = userService.getUserInfos(userId);
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_USERINFOS_SUCCESS, response));
     }
 
     @PatchMapping("/user/role")
-    public ResponseEntity<SFaaSResponse<?>> modifyUserRole(@RequestBody UpdateUserRoleRequest request) {
-        userService.modifyUserRole(request);
+    public ResponseEntity<SFaaSResponse<?>> modifyUserRole(@RequestHeader("userId") Long userId,
+                                                           @RequestBody UpdateUserRoleRequest request) {
+        userService.modifyUserRole(userId, request);
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.PATCH_USERROLE_SUCCESS));
     }
 
-    @GetMapping("/user/me/{id}")
-    public ResponseEntity<SFaaSResponse<?>> getMyInfo(@PathVariable("id") Long userId) {
-        UserDetailInfoResponse response = userService.getMyInfo(userId);
-        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_MYINFO_SUCCESS, response));
+    @GetMapping("/user/me")
+    public ResponseEntity<SFaaSResponse<?>> getMyInfo(@RequestHeader("userId") Long userId) {
+        return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_MYINFO_SUCCESS, userService.getMyInfo(userId)));
     }
 
 }

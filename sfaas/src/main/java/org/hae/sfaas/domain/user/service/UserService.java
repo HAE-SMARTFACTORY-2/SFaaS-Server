@@ -52,8 +52,8 @@ public class UserService {
     }
 
     @Transactional
-    public void modifyUserRole(UpdateUserRoleRequest request) {
-        User supervisor = userMapper.findById(request.userId());
+    public void modifyUserRole(Long userId, UpdateUserRoleRequest request) {
+        User supervisor = userMapper.findById(userId);
         User targetUser = userMapper.findById(request.targetUserId());
 
         if(isInvalidUser(supervisor) || isInvalidUser(targetUser)) {

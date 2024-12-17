@@ -22,6 +22,12 @@
         WHERE user_id = #{userId}
     </select>
 
+    <select id="findByMgr" parameterType="Long" resultType="User">
+        SELECT *
+        FROM ${sfaas.db.schema}.user
+        WHERE user_mgr = #{userMgr}
+    </select>
+
     <select id="findAll" resultType="DetailUser">
         SELECT u.*, f.factory_code, f.factory_location
         FROM ${sfaas.db.schema}.user u

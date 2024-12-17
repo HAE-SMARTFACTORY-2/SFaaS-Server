@@ -31,7 +31,8 @@ public class BoardService {
 
         if(user == null){
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
-        }else if(!Objects.equals(user.getUserRole().getRole(), UserRole.ADMIN.getRole())){
+        }else if(!Objects.equals(user.getUserRole().getRole(), UserRole.ADMIN.getRole())
+                || !Objects.equals(user.getUserRole().getRole(), UserRole.MANAGER.getRole())){
             throw new SFaaSException(ErrorType.FORBIDDEN_USER);
         }
 
@@ -69,7 +70,8 @@ public class BoardService {
 
         if(user == null){
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
-        }else if(!Objects.equals(user.getUserRole().getRole(), UserRole.ADMIN.getRole())){
+        }else if(!Objects.equals(user.getUserRole().getRole(), UserRole.ADMIN.getRole())
+                || !Objects.equals(user.getUserRole().getRole(), UserRole.MANAGER.getRole())){
             throw new SFaaSException(ErrorType.FORBIDDEN_USER);
         }
 

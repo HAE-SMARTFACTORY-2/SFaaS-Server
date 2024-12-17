@@ -26,12 +26,14 @@ public enum SuccessType {
     GET_BATTERYPACK_SOC_SUCCESS(HttpStatus.OK,2011,"배터리팩 SoC 전압 데이터 조회에 성공하였습니다."),
     GET_BATTERYPACK_DETAIL_SUCCESS(HttpStatus.OK,2012,"배터리팩 상세 데이터 조회에 성공하였습니다"),
     GET_BATTERYPACK_STATUS_SUCCESS(HttpStatus.OK,2013,"배터리팩 불량품/양품 데이터 조회에 성공하였습니다"),
-    GET_AGING_TEMPERATURE_SUCCESS(HttpStatus.OK,2014,"에이징 공정 온도 데이터 조회에 성공하였습니다."),
-    GET_AGING_STATUS_SUCCESS(HttpStatus.OK,2015,"에이징 공정 불량품/양품 데이터 조회에 성공하였습니다"),
-    POST_BOARD_CREATE_SUCCESS(HttpStatus.OK,2016,"게시판 글 업로드 성공하였습니다"),
-    GET_BOARD_STATUS_SUCCESS(HttpStatus.OK,2017,"게시판 조회 성공하였습니다."),
-    GET_BOARD_DETAIL_SUCCESS(HttpStatus.OK,2018,"게시글 상세 데이터 조회 성공하였습니다"),
-    DELETE_BOARD_SUCCESS(HttpStatus.OK,2019,"게시글 삭제 성공하였습니다.");
+    GET_BATTERY_STATUS_SUCCESS(HttpStatus.OK, 2014, "배터리 불량품/양품 데이터 조회에 성공하였습니다"),
+    GET_BATTERY_OUTPUT_SUCCESS(HttpStatus.OK, 2015, "배터리 시간별 생산량/목표수량 조회에 성공하였습니다"),
+    GET_AGING_TEMPERATURE_SUCCESS(HttpStatus.OK,2016,"에이징 공정 온도 데이터 조회에 성공하였습니다."),
+    GET_AGING_STATUS_SUCCESS(HttpStatus.OK,2017,"에이징 공정 불량품/양품 데이터 조회에 성공하였습니다"),
+    POST_BOARD_CREATE_SUCCESS(HttpStatus.OK,2018,"게시판 글 업로드 성공하였습니다"),
+    GET_BOARD_STATUS_SUCCESS(HttpStatus.OK,2019,"게시판 조회 성공하였습니다."),
+    GET_BOARD_DETAIL_SUCCESS(HttpStatus.OK,2020,"게시글 상세 데이터 조회 성공하였습니다"),
+    DELETE_BOARD_SUCCESS(HttpStatus.OK,2021,"게시글 삭제 성공하였습니다.");
     /**
      * 201 CREATED (2100 ~ 2199)
      */

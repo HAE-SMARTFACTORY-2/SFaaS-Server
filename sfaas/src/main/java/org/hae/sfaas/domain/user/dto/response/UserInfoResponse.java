@@ -1,7 +1,5 @@
 package org.hae.sfaas.domain.user.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import org.hae.sfaas.domain.user.model.User;
 import org.hae.sfaas.domain.user.model.UserRole;
 

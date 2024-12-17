@@ -54,19 +54,19 @@ public class UserService {
     @Transactional
     public void modifyUserRole(Long userId, UpdateUserRoleRequest request) {
         User supervisor = userMapper.findById(userId);
-        User targetUser = userMapper.findById(request.targetUserId());
+        User targetUser = userMapper.findByMgr(request.targetUserMgr());
 
         if(isInvalidUser(supervisor) || isInvalidUser(targetUser)) {
             throw new SFaaSException(ErrorType.NOT_FOUND_USER);
         }
         if (supervisor.getUserRole().equals(UserRole.ADMIN)) {
-            userMapper.updateUserRoleById(request.targetUserId(), request.role());
+            userMapper.updateUserRoleById(request.targetUserMgr(), request.role());
         } else if (supervisor.getUserRole().equals(UserRole.MANAGER)) {
             if (supervisor.getFactoryId().equals(targetUser.getFactoryId())) {
                 if(request.role().equals(UserRole.ADMIN)) {
                     throw new SFaaSException(ErrorType.FORBIDDEN_USER_MODIFY);
                 }
-                userMapper.updateUserRoleById(request.targetUserId(), request.role());
+                userMapper.updateUserRoleById(request.targetUserMgr(), request.role());
             } else {
                 throw new SFaaSException(ErrorType.FORBIDDEN_USER_MODIFY);
             }

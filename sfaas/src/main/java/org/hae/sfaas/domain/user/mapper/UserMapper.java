@@ -13,6 +13,7 @@ import java.util.List;
 public interface UserMapper {
     User loginUser(UserLoginRequest request);
     User findById(Long userId);
+    User findByMgr(Long userMgr);
     List<DetailUser> findAll();
     List<DetailUser> findByFactoryId(Long factoryId);
     DetailUser getMyInfo(Long userId);

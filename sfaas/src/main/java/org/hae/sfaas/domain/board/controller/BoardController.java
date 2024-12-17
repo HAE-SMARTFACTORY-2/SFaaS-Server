@@ -23,7 +23,7 @@ public class BoardController {
 
     @GetMapping("/board")
     public ResponseEntity<SFaaSResponse<?>> getAllBoard(@RequestHeader("userId") Long userId,
-                                                        @RequestParam("factoryId") Long factoryId){
+                                                        @RequestParam(value = "factoryId", required = false) Long factoryId){
         return ResponseEntity.status(HttpStatus.OK).body((SFaaSResponse.success(SuccessType.GET_BOARD_STATUS_SUCCESS,boardService.getAllBoard(userId,factoryId))));
     }
 

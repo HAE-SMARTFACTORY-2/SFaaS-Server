@@ -25,7 +25,7 @@ public class BatteryPackController {
                                                             @RequestParam(value = "factoryId", required = false) Long factoryId,
                                                             @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                             @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
-                                                            @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter){
+                                                            @RequestParam(value = "filter", required = false, defaultValue = "HOUR") String filter){
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_VOLTAGE_SUCCESS, batteryPackService.getVoltageInfo(userId, factoryId, startAt, endAt, filter)));
     }
 
@@ -34,7 +34,7 @@ public class BatteryPackController {
                                                          @RequestParam(value = "factoryId", required = false) Long factoryId,
                                                          @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                          @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
-                                                         @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter){
+                                                         @RequestParam(value = "filter", required = false, defaultValue = "HOUR") String filter){
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_TEMPERATURE_SUCCESS, batteryPackService.getTempInfo(userId, factoryId, startAt, endAt, filter)));
     }
 
@@ -43,7 +43,7 @@ public class BatteryPackController {
                                                         @RequestParam(value = "factoryId", required = false) Long factoryId,
                                                         @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                         @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
-                                                        @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter){
+                                                        @RequestParam(value = "filter", required = false, defaultValue = "HOUR") String filter){
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_BATTERYPACK_SOC_SUCCESS, batteryPackService.getSocInfo(userId, factoryId, startAt, endAt, filter)));
     }
 

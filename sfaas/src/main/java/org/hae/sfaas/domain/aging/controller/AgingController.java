@@ -25,7 +25,7 @@ public class AgingController {
                                                          @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                          @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
                                                          @RequestParam(value = "factoryId", required = false) Long factoryId,
-                                                         @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter){
+                                                         @RequestParam(value = "filter", required = false, defaultValue = "HOUR") String filter){
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_AGING_TEMPERATURE_SUCCESS,agingService.getTempInfo(userId,factoryId,startAt,endAt,filter)));
     }
     //양품불량품

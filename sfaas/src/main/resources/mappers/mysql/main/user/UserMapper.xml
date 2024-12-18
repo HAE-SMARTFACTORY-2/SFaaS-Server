@@ -51,7 +51,7 @@
     <update id="updateUserRoleById" >
         UPDATE ${sfaas.db.schema}.user
         SET user_role = #{role}
-        WHERE user_id = #{userId}
+        WHERE user_mgr = #{userMgr}
     </update>
 
 </mapper>

@@ -8,6 +8,7 @@ public record BoardInfoResponse (
         Long boardId,
         String userName,
         String title,
+        String content,
         LocalDateTime createAt
 ){
     public static BoardInfoResponse of(BoardInfo boardInfo){
@@ -15,6 +16,7 @@ public record BoardInfoResponse (
                 boardInfo.getBoardId(),
                 boardInfo.getUserName(),
                 boardInfo.getTitle(),
+                boardInfo.getContent(),
                 boardInfo.getCreateAt()
         );
     }

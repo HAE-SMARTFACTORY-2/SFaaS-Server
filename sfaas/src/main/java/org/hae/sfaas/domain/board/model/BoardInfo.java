@@ -9,5 +9,6 @@ public class BoardInfo {
     Long boardId;
     String userName;
     String title;
+    String content;
     LocalDateTime createAt;
 }

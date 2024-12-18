@@ -17,6 +17,7 @@
         board_id,
         u.user_name,
         title,
+        content,
         create_at
         FROM ${sfaas.db.schema}.user u
         JOIN ${sfaas.db.schema}.board b ON u.user_id = b.user_id

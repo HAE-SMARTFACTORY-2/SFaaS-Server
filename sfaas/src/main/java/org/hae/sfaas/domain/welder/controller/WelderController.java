@@ -25,7 +25,7 @@ public class WelderController {
                                                                @RequestParam(value = "factoryId", required = false) Long factoryId,
                                                                @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                                @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
-                                                               @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter) {
+                                                               @RequestParam(value = "filter", required = false, defaultValue = "HOUR") String filter) {
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_WELDER_GATETIME_SUCCESS, welderService.getSpeedInfo(userId, factoryId, startAt, endAt, filter)));
     }
 
@@ -55,7 +55,7 @@ public class WelderController {
                                                                @RequestParam(value = "factoryId", required = false) Long factoryId,
                                                                 @RequestParam(value = "startAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startAt,
                                                                 @RequestParam(value = "endAt", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endAt,
-                                                                @RequestParam(value = "filter", required = false, defaultValue = "DATE") String filter) {
+                                                                @RequestParam(value = "filter", required = false, defaultValue = "HOUR") String filter) {
         return ResponseEntity.status(HttpStatus.OK).body(SFaaSResponse.success(SuccessType.GET_WELDER_POWER_SUCCESS, welderService.getPowerInfo(userId, factoryId, startAt, endAt, filter)));
     }
 
